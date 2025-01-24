@@ -1,1449 +1,818 @@
-//Fri Jan 24 2025 12:11:55 GMT+0000 (Coordinated Universal Time)
+//Fri Jan 24 2025 12:13:30 GMT+0000 (Coordinated Universal Time)
 //Base:https://github.com/echo094/decode-js
 //Modify:https://github.com/smallfawn/decode_action
-!function () {
-  var w = {
-    669: function (y, N, G) {
-      "use strict";
-
-      var M = {
-        f4: function () {
-          return O;
-        },
-        f5: function () {
-          return J;
-        },
-        f6: function () {
-          return E;
-        },
-        f7: function () {
-          return C;
-        },
-        f8: function () {
-          return K;
-        },
-        f9: function () {
-          return v;
-        },
-        ff: function () {
-          return H;
-        },
-        fA: function () {
-          return P;
+const _0x18f76b = require("fs"),
+  _0x29142b = require("js-yaml"),
+  _0x1bffb2 = require("axios");
+async function _0x9d95a() {
+  try {
+    {
+      const _0x54476c = "./bing.yaml",
+        _0x4b19a7 = _0x18f76b.readFileSync(_0x54476c, "utf8"),
+        _0x21564e = _0x29142b.load(_0x4b19a7),
+        _0x3eb46b = _0x21564e?.["accounts"] || [];
+      if (_0x3eb46b.length === 0) return console.log("未找到有效的app账号数据，跳过处理"), [];
+      const _0x3dad3b = [];
+      for (let _0x19b30c = 0; _0x19b30c < _0x3eb46b.length; _0x19b30c++) {
+        const _0x2dbeea = _0x3eb46b[_0x19b30c],
+          _0x3c552e = _0x2dbeea.code?.["match"](/(?:[?&])code=([A-Za-z0-9._%-]+)/);
+        if (!_0x3c552e) {
+          console.error("第 " + (_0x19b30c + 1) + " 号app账号没有有效的 code 参数，跳过");
+          continue;
         }
-      };
-      G.d(N, M);
-      var W = G(376);
-      var x = G(980);
-      var S = G(606);
-      var U = G(554);
-      var Q = ["type__", "refer__", "ipcity__", "md5__", "decode__", "encode__", "time__", "timestamp__", "type__"];
-      var T = {};
-      function V(j) {
-        return j + "_dySig";
-      }
-      var F = {
-        fw: function (j) {
-          return !!(0, S.fD)(V(j.host));
-        },
-        fR: function (j) {
-          (0, S.fy)(V(j.host), "true", 43200000);
-        },
-        un: function (j) {
-          return !((0, U.fN)(j) || j.host.match(/(cloudauth-device|captcha-(pro-)?open).*?\.aliyuncs\.com$/) || !F.fw(j));
-        },
-        fp: function (j) {
-          for (var k = 0, q = encodeURIComponent(j), I = 0; I < q.length; I++) {
-            k = (k << 7) - k + 398 + q.charCodeAt(I);
-            k |= 0;
-          }
-          return k;
-        },
-        uf: function (j, k) {
-          return !!F.un(j) && F.fu(j, k);
-        },
-        fG: function (j) {
-          if (T[j]) {
-            return T[j];
-          }
-          for (var k = 0, q = 0; q < j.length; q++) {
-            k += j[q].charCodeAt();
-          }
-          var I = Q[k % Q.length] + k % 10000;
-          return T[j] = I;
-        },
-        fL: function (j) {
-          var k = (0, U.fb)(j).host;
-          var k = F.fG(k);
-          return (0, U.fM)(j, k);
-        },
-        fu: function (j, k) {
-          var q = (0, U.fW)(j, true);
-          if (k) {
-            q += k;
-          }
-          k = F.fp(q) + "|" + (0, W.n)() + "|" + new Date().getTime() + "|1";
-          q = x.fh.ua(k, true);
-          k = {};
-          k[F.fG(j.host)] = q;
-          j.search = (0, U.fx)(j.search, k);
-          return (0, U.fW)(j);
-        }
-      };
-      var P = F.uf;
-      F.fu;
-      var E = F.fL;
-      var O = F.fR;
-      var K = F.fG;
-      var v = 30;
-      var J = 0;
-      function C() {
-        J++;
-      }
-      function H(j) {
-        return -1 < j.indexOf("var".concat(" _0x2576")) && -1 < j.indexOf("duCiQ',".concat("'MOvsy")) || -1 < j.indexOf("function r(a".concat(",J)")) && -1 < j.indexOf("IunBRbfp7MLmwv6AckTt".concat("iY1jgrHZxGhlzW3aVPqEFN5J")) || -1 < j.indexOf("function e(l".concat(",m)")) && -1 < j.indexOf("6l9vPJp1BwS5GC".concat("Ae8L70NoszbtVcuhx3igmdrFf")) || -1 < j.indexOf("aliyun_".concat("waf_")) && -1 < j.indexOf("371ac51ab53".concat("fc53eb6bf9aa462a72e9f")) && -1 < j.indexOf("b63e746d3d0".concat("f33fa6ce3709868ba5f8b"));
-      }
-    },
-    540: function (y, N, p) {
-      "use strict";
-
-      var L = {
-        fS: function () {
-          return S;
-        },
-        fU: function () {
-          return U;
-        },
-        fQ: function () {
-          return Q;
-        },
-        fd: function () {
-          return x;
-        }
-      };
-      p.r(N);
-      p.d(N, L);
-      var b = p(429);
-      var M = p(606);
-      var W = p(554);
-      var h = p(170);
-      var x = "acw_sc__v2";
-      function S(m, T) {
-        if (h.fm[h.fT] && (0, W.ft)(m, location.href)) {
-          Q(m, T);
-        }
-        (0, b.fV)(x, T, 3600000);
-      }
-      function U(m) {
-        return m + "_" + x;
-      }
-      function Q(m, T) {
-        m = (0, W.fb)(m).host;
-        (0, M.fy)(U(m), T);
-      }
-    },
-    721: function (y, N, u) {
-      var G = u(540).fS;
-      y.exports = {
-        fF: function (L, b) {
-          for (var M = JSON.parse("[15, 35, 29, 24, 33, 16, 1, 38, 10, 9, 19, 31, 40, 27, 22, 23, 25, 13, 6, 11,39,18,20,8, 14, 21, 32, 26, 2, 30, 7, 4, 17, 5, 3, 28, 34, 37, 12, 36]"), W = "3000176000856006061501533003690027800375", h = [], x = "", S = "", U = 0; U < L.length; U++) {
-            for (var Q = L[U], m = 0; m < M.length; m++) {
-              if (M[m] == U + 1) {
-                h[m] = Q;
+        const _0x1e8104 = _0x3c552e[1];
+        if (!_0x2dbeea.refresh_token) {
+          {
+            console.log("开始登录第 " + (_0x19b30c + 1) + " 号app账号");
+            try {
+              const _0x47c407 = await _0x272fbd(_0x1e8104);
+              _0x2dbeea.refresh_token = _0x47c407;
+              console.log("第 " + (_0x19b30c + 1) + " 号app账号获取到新的刷新令牌");
+            } catch (_0x596068) {
+              {
+                console.error("第 " + (_0x19b30c + 1) + " 号app账号获取刷新令牌失败: " + _0x596068);
+                continue;
               }
             }
           }
-          for (x = h.join(""), U = 0; U < x.length && U < W.length; U += 2) {
-            var T = (parseInt(x.slice(U, U + 2), 16) ^ parseInt(W.slice(U, U + 2), 16)).toString(16);
-            if (1 == T.length) {
-              S += T = "0" + T;
-            } else {
-              S += T = T;
+        }
+        if (_0x2dbeea.refresh_token) {
+          try {
+            {
+              const {
+                access_token: _0x46d0a9,
+                refresh_token: _0x58cf98
+              } = await _0x56e71a(_0x2dbeea.refresh_token);
+              _0x2dbeea.access_token = _0x46d0a9;
+              _0x58cf98 && (_0x2dbeea.refresh_token = _0x58cf98);
+              console.log("第 " + (_0x19b30c + 1) + " 号app账号获取到登录令牌");
+            }
+          } catch (_0x53bc54) {
+            {
+              console.error("第 " + (_0x19b30c + 1) + " 号app账号获取登录令牌失败: " + _0x53bc54);
+              continue;
             }
           }
-          G(b, S);
         }
+        _0x2dbeea.access_token && _0x3dad3b.push(_0x2dbeea);
+      }
+      console.log("有效app账号数：", _0x3dad3b.length);
+      if (_0x3dad3b.length > 0) await _0x32ed67(_0x54476c, _0x3dad3b), console.log("YAML 文件已更新");else {
+        console.log("没有有效app账号，跳过 YAML 文件更新");
+      }
+      return _0x3dad3b;
+    }
+  } catch (_0x2b2681) {
+    console.error("读取或解析 bing.yaml 文件失败:", _0x2b2681);
+    throw _0x2b2681;
+  }
+}
+async function _0x272fbd(_0x538039) {
+  const _0x4734e6 = "https://login.live.com/oauth20_token.srf?client_id=0000000040170455&code=" + _0x538039 + "&redirect_uri=https://login.live.com/oauth20_desktop.srf&grant_type=authorization_code";
+  try {
+    const _0x41902b = await _0x1bffb2.get(_0x4734e6);
+    return _0x41902b.data.refresh_token;
+  } catch (_0x20b631) {
+    console.error("获取 刷新令牌 失败: " + _0x20b631);
+    throw _0x20b631;
+  }
+}
+async function _0x56e71a(_0x5ca440) {
+  const _0x2197d9 = "https://login.live.com/oauth20_token.srf?client_id=0000000040170455&refresh_token=" + _0x5ca440 + "&scope=service::prod.rewardsplatform.microsoft.com::MBI_SSL&grant_type=REFRESH_TOKEN";
+  try {
+    {
+      const _0x5bfaec = await _0x1bffb2.get(_0x2197d9);
+      return {
+        "access_token": _0x5bfaec.data.access_token,
+        "refresh_token": _0x5bfaec.data.refresh_token || _0x5ca440
       };
+    }
+  } catch (_0x345e21) {
+    {
+      console.error("获取 登录令牌 失败: " + _0x345e21);
+      throw _0x345e21;
+    }
+  }
+}
+async function _0x32ed67(_0x519d71, _0x30c449) {
+  try {
+    const _0x2e02bb = {
+        "accounts": _0x30c449
+      },
+      _0x4e5900 = _0x29142b.dump(_0x2e02bb, {
+        "lineWidth": 1000000
+      });
+    _0x18f76b.writeFileSync(_0x519d71, _0x4e5900, "utf8");
+  } catch (_0x1899ef) {
+    {
+      console.error("更新 bing.yaml 文件失败:", _0x1899ef);
+      throw _0x1899ef;
+    }
+  }
+}
+const _0x4f1cfa = process.env.BING_CK ? process.env.BING_CK.split("\n").map(_0x166b14 => _0x166b14.trim()).filter(_0x1f1412 => _0x1f1412) : [];
+if (_0x4f1cfa.length === 0) throw new Error("未检测到任何账号，请在环境变量中设置 BING_CK");
+console.log("web账号数：", _0x4f1cfa.length);
+const _0x56c103 = process.env.PC_USER_AGENT,
+  _0xef84f9 = process.env.MOBILE_USER_AGENT;
+if (!_0x56c103 || !_0xef84f9) throw new Error("请在环境变量中设置 PC_USER_AGENT 和 MOBILE_USER_AGENT");
+function _0x1534a6(_0x3a0447) {
+  const _0x4566ba = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let _0x277fb4 = "";
+  for (let _0x49e071 = 0; _0x49e071 < _0x3a0447; _0x49e071++) {
+    _0x277fb4 += _0x4566ba.charAt(Math.floor(Math.random() * _0x4566ba.length));
+  }
+  return _0x277fb4;
+}
+async function _0x2319e5() {
+  const _0x43d774 = ["BaiduHot", "ToutiaoHot", "DouYinHot", "ZhihuHot", "BiliBliHot", "WeiBoHot", "SoGouHot", "BaiduTieBaHot", "SoHot"],
+    _0x529bee = process.env.apikey;
+  let _0x3b77f9 = [];
+  _0x605981(_0x43d774);
+  while (_0x3b77f9.length === 0) {
+    for (const _0x10c2a3 of _0x43d774) {
+      try {
+        {
+          let _0x36c4a9 = "https://api.gumengya.com/Api/" + _0x10c2a3;
+          _0x529bee && (_0x36c4a9 += "&appkey=" + _0x529bee);
+          const _0x5309ca = await _0x1bffb2.get(_0x36c4a9);
+          _0x5309ca.data && _0x5309ca.data.data && (_0x3b77f9 = _0x3b77f9.concat(_0x5309ca.data.data.map(_0x8674b3 => _0x8674b3.title)));
+        }
+      } catch (_0x410906) {
+        console.warn("请求失败: " + _0x10c2a3 + ", 错误: " + _0x410906);
+      }
+    }
+    _0x3b77f9.length === 0 && (console.warn("未能获取到关键词，重试中..."), await new Promise(_0x3fad33 => setTimeout(_0x3fad33, 3000)));
+  }
+  const _0x3c4db9 = [...new Set(_0x3b77f9)];
+  return _0x3c4db9;
+}
+function _0x605981(_0x3b0a2e) {
+  for (let _0x4b76f6 = _0x3b0a2e.length - 1; _0x4b76f6 > 0; _0x4b76f6--) {
+    const _0xe7e7bd = Math.floor(Math.random() * (_0x4b76f6 + 1));
+    [_0x3b0a2e[_0x4b76f6], _0x3b0a2e[_0xe7e7bd]] = [_0x3b0a2e[_0xe7e7bd], _0x3b0a2e[_0x4b76f6]];
+  }
+}
+async function _0xdbce7a(_0x20d543, _0x2dee02, _0x522afa, _0x35d8c3) {
+  const _0x1209b6 = "https://cn.bing.com/search",
+    _0x3100ec = {
+      "q": _0x20d543,
+      "qs": "n",
+      "form": _0x1534a6(4),
+      "sp": "-1",
+      "lq": "0",
+      "pq": _0x20d543,
+      "sc": "9-16",
+      "sk": "",
+      "cvid": _0x1534a6(32),
+      "ghsh": "0",
+      "ghacc": "0",
+      "ghpl": ""
     },
-    170: function (y, N, G) {
-      "use strict";
-
-      var L = {
-        fm: function () {
-          return S;
-        },
-        fo: function () {
-          return b;
-        },
-        fP: function () {
-          return M;
-        },
-        fE: function () {
-          return W;
-        },
-        fT: function () {
-          return x;
-        },
-        fs: function () {
-          return h;
+    _0x166d06 = {
+      "User-Agent": _0x2dee02,
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+      "priority": "u=0, i",
+      "Cookie": _0x522afa
+    };
+  try {
+    const _0xfc2c7f = await _0x1bffb2.get(_0x1209b6, {
+      "params": _0x3100ec,
+      "headers": _0x166d06
+    });
+  } catch (_0x44a50a) {
+    console.error("[账号 " + _0x35d8c3 + "] 搜索请求失败: " + _0x44a50a);
+  }
+}
+async function _0x1f8978(_0x4dbadf, _0x1b191b) {
+  const _0x53533e = "https://cn.bing.com/rewardsapp/reportActivity",
+    _0x37e718 = {
+      "Cookie": _0x4dbadf,
+      "User-Agent": _0x56c103
+    };
+  try {
+    {
+      const _0x5773c5 = await _0x1bffb2.get(_0x53533e, {
+          "headers": _0x37e718
+        }),
+        _0x5ef413 = _0x5773c5.data.match(/"RewardsBalance":(\d+)/);
+      return _0x5ef413 ? parseInt(_0x5ef413[1], 10) : (console.warn("[账号 " + _0x1b191b + "] 未找到积分信息"), null);
+    }
+  } catch (_0x14f4c3) {
+    console.error("[账号 " + _0x1b191b + "] 获取积分失败: " + _0x14f4c3);
+    return null;
+  }
+}
+const _0x5035a7 = require("cheerio");
+async function _0x839be8(_0x1b2182) {
+  const _0x59baab = "https://rewards.bing.com",
+    _0x20231e = {
+      "ref": "rewardspanel"
+    },
+    _0x173fdb = {
+      "User-Agent": _0x56c103,
+      "Cookie": _0x1b2182
+    };
+  try {
+    {
+      const _0x397859 = await _0x1bffb2.get(_0x59baab, {
+          "params": _0x20231e,
+          "headers": _0x173fdb
+        }),
+        _0x103bdc = _0x5035a7.load(_0x397859.data),
+        _0x5954ba = _0x103bdc("input[name=\"__RequestVerificationToken\"]");
+      if (_0x5954ba.length > 0) {
+        return _0x5954ba.val();
+      } else return console.error("__RequestVerificationToken not found."), null;
+    }
+  } catch (_0x2db5e3) {
+    console.error("获取 Token 失败: " + _0x2db5e3);
+    return null;
+  }
+}
+async function _0x4f7d82(_0x25e43d, _0x176516, _0xc75875, _0x46860d) {
+  console.log("开始执行任务 " + _0x25e43d);
+  const _0x5b3d67 = "https://rewards.bing.com/api/reportactivity",
+    _0x4ecccc = {
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    _0x21e1c4 = new URLSearchParams({
+      "id": _0x25e43d,
+      "hash": _0x176516,
+      "__RequestVerificationToken": _0x46860d
+    }).toString(),
+    _0x67cff = {
+      "User-Agent": _0x56c103,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Referer": "https://rewards.bing.com/",
+      "Cookie": _0xc75875
+    };
+  try {
+    const _0x560699 = await _0x1bffb2.post(_0x5b3d67, _0x21e1c4, {
+      "params": _0x4ecccc,
+      "headers": _0x67cff
+    });
+    if (_0x560699.status !== 200) {
+      {
+        console.error("请求失败，HTTP 状态码: " + _0x560699.status);
+        return;
+      }
+    }
+    const _0x3dfb76 = _0x560699.data,
+      _0x5408d3 = _0x3dfb76.balance || null;
+    if (_0x5408d3 !== null) return console.log("当前积分：" + _0x5408d3), true;else {
+      console.warn("未能从响应中获取积分信息");
+    }
+  } catch (_0x3352c8) {
+    console.error("请求失败: " + _0x3352c8);
+  }
+}
+async function _0x948deb(_0x36cec8) {
+  const _0x29ed40 = "https://rewards.bing.com/api/getuserinfo",
+    _0x3acfba = {
+      "type": "1",
+      "X-Requested-With": "XMLHttpRequest",
+      "_": Date.now()
+    },
+    _0x3b4767 = {
+      "User-Agent": _0x56c103,
+      "Cookie": _0x36cec8
+    };
+  try {
+    {
+      const _0x59aef3 = await _0x1bffb2.get(_0x29ed40, {
+        "params": _0x3acfba,
+        "headers": _0x3b4767
+      });
+      return _0x59aef3.data;
+    }
+  } catch (_0x3c05b1) {
+    console.error("获取搜索任务进度失败，错误: " + _0x3c05b1);
+    return null;
+  }
+}
+async function _0x2c1423(_0x671042, _0x37eac8, _0x55e397) {
+  console.log("开始处理账号 " + _0x671042);
+  let _0x24c76a = "",
+    _0x33d0b1;
+  try {
+    _0x33d0b1 = await _0x55e397(_0x37eac8);
+    if (!_0x33d0b1) {
+      {
+        console.warn("跳过当前账号 " + _0x671042 + " 任务，因为账号失效。");
+        _0x24c76a += "账号 " + _0x671042 + " 失效\n";
+        QLAPI.notify("账号失效", "当前账号 " + _0x671042 + "失效。");
+        return;
+      }
+    }
+  } catch (_0x5d8bc6) {
+    {
+      console.error("账号 " + _0x671042 + " 获取 token 失败，错误: " + _0x5d8bc6);
+      return;
+    }
+  }
+  const _0x47a7cf = "https://rewards.bing.com/api/getuserinfo",
+    _0x5b70ac = {
+      "type": "1",
+      "X-Requested-With": "XMLHttpRequest",
+      "_": Date.now()
+    },
+    _0x37e0ec = {
+      "User-Agent": _0x56c103,
+      "Cookie": _0x37eac8
+    };
+  let _0x17e973;
+  try {
+    const _0x516b7c = await _0x1bffb2.get(_0x47a7cf, {
+      "params": _0x5b70ac,
+      "headers": _0x37e0ec
+    });
+    _0x17e973 = _0x516b7c.data;
+  } catch (_0xdbff17) {
+    console.error("账号 " + _0x671042 + " 获取每日任务失败，错误: " + _0xdbff17);
+    return;
+  }
+  const _0x37794a = new Date().toLocaleDateString("en-US", {
+    "month": "2-digit",
+    "day": "2-digit",
+    "year": "numeric"
+  });
+  let _0x267be3 = 0,
+    _0x2c7f69 = 0;
+  const _0x1b0b7f = _0x17e973.dashboard.dailySetPromotions[_0x37794a] || [];
+  for (const _0x598cff of _0x1b0b7f) {
+    {
+      _0x2c7f69++;
+      const {
+        offerId: _0x4dac3d,
+        title: _0x4a0e5e,
+        hash: _0x16fb49,
+        complete: _0x46896d,
+        pointProgressMax: _0xa43e51,
+        attributes: _0x1af16f
+      } = _0x598cff;
+      console.log("------------------------");
+      console.log("每日任务");
+      console.log("[账号 " + _0x671042 + "]");
+      console.log("Name: " + _0x4dac3d);
+      console.log("题目: " + _0x4a0e5e);
+      console.log("Hash: " + _0x16fb49);
+      console.log("是否完成: " + _0x46896d);
+      console.log("奖励积分: " + _0xa43e51);
+      if (_0x1af16f?.["is_unlocked"] === "False") console.log("任务未解锁");else {
+        if (!_0x46896d) {
+          try {
+            {
+              const _0x1f79c1 = await _0x4f7d82(_0x4dac3d, _0x16fb49, _0x37eac8, _0x33d0b1);
+              _0x1f79c1 && _0x267be3++;
+            }
+          } catch (_0x36b2ec) {
+            {
+              console.error("账号 " + _0x671042 + " 执行任务失败，错误: " + _0x36b2ec);
+              continue;
+            }
+          }
+        } else _0x267be3++, console.log("任务已完成");
+      }
+      const _0x1b98d8 = Math.floor(Math.random() * 51) + 250;
+      console.log("[账号 " + _0x671042 + "] 等待 " + _0x1b98d8 + " 秒");
+      await new Promise(_0x186e2f => setTimeout(_0x186e2f, _0x1b98d8 * 1000));
+    }
+  }
+  let _0x57951d = 0,
+    _0x26ea20 = 0;
+  for (const _0x286585 of _0x17e973.dashboard.morePromotions) {
+    if (_0x286585.pointProgressMax === 0) continue;
+    _0x26ea20++;
+    const {
+      offerId: _0x484564,
+      title: _0x2749ad,
+      hash: _0xccc28f,
+      complete: _0x34b3d7,
+      pointProgressMax: _0x1a1a2c,
+      attributes: _0x3dda40
+    } = _0x286585;
+    console.log("------------------------");
+    console.log("更多任务");
+    console.log("[账号 " + _0x671042 + "]");
+    console.log("Name: " + _0x484564);
+    console.log("题目: " + _0x2749ad);
+    console.log("Hash: " + _0xccc28f);
+    console.log("是否完成: " + _0x34b3d7);
+    console.log("奖励积分: " + _0x1a1a2c);
+    if (_0x3dda40?.["is_unlocked"] === "False") console.log("任务未解锁");else {
+      if (!_0x34b3d7) {
+        try {
+          const _0x278cf9 = await _0x4f7d82(_0x484564, _0xccc28f, _0x37eac8, _0x33d0b1);
+          _0x278cf9 && _0x57951d++;
+        } catch (_0x304e42) {
+          console.error("账号 " + _0x671042 + " 执行任务失败，错误: " + _0x304e42);
+          continue;
         }
+      } else _0x57951d++, console.log("任务已完成");
+    }
+    const _0x3225d4 = Math.floor(Math.random() * 51) + 250;
+    console.log("[账号 " + _0x671042 + "] 等待 " + _0x3225d4 + " 秒");
+    await new Promise(_0x3eacc6 => setTimeout(_0x3eacc6, _0x3225d4 * 1000));
+  }
+  const _0x457786 = await _0x948deb(_0x37eac8);
+  if (_0x457786) {
+    {
+      const _0xa7dbe5 = _0x457786.dashboard.userStatus.counters,
+        _0x4bfcfc = _0xa7dbe5.pcSearch ? _0xa7dbe5.pcSearch[0].pointProgress : 0,
+        _0x187f65 = _0xa7dbe5.pcSearch ? _0xa7dbe5.pcSearch[0].pointProgressMax : 0,
+        _0x40a592 = _0xa7dbe5.mobileSearch ? _0xa7dbe5.mobileSearch[0].pointProgress : 0,
+        _0x3cbf98 = _0xa7dbe5.mobileSearch ? _0xa7dbe5.mobileSearch[0].pointProgressMax : 0;
+      _0x24c76a += "账号 " + _0x671042 + " PC 搜索任务进度: " + _0x4bfcfc + "/" + _0x187f65 + "\n";
+      _0x24c76a += "账号 " + _0x671042 + " 移动搜索任务进度: " + _0x40a592 + "/" + _0x3cbf98 + "\n";
+    }
+  }
+  _0x24c76a += "账号 " + _0x671042 + " 完成每日任务 " + _0x267be3 + "/" + _0x2c7f69 + " 个\n";
+  _0x24c76a += "账号 " + _0x671042 + " 完成临时任务 " + _0x57951d + "/" + _0x26ea20 + " 个\n";
+  const _0x1aafed = await _0x1f8978(_0x37eac8, _0x671042);
+  _0x24c76a += "账号 " + _0x671042 + " 剩余积分 " + _0x1aafed + "\n";
+  return _0x24c76a;
+}
+async function _0x3b2416(_0x2cc18d, _0x504291, _0x434bad, _0x15f861, _0x28fd28) {
+  const _0x4076e3 = Math.random() * 99000 + 1000;
+  await new Promise(_0x53a246 => setTimeout(_0x53a246, _0x4076e3));
+  const _0xd7589b = await _0x434bad();
+  console.log("[账号 " + _0x2cc18d + "] 开始处理...");
+  const _0x2534a8 = new Set();
+  let _0x2dc4ba = await _0x15f861(_0x504291, _0x2cc18d);
+  if (_0x2dc4ba === null) {
+    console.error("[账号 " + _0x2cc18d + "] 无法获取初始积分，跳过此账号");
+    return;
+  }
+  console.log("[账号 " + _0x2cc18d + "] 初始积分: " + _0x2dc4ba);
+  let _0x2bf380 = 0;
+  const _0x5e4d67 = 5;
+  while (true) {
+    const _0x223b08 = _0xd7589b.filter(_0x470a81 => !_0x2534a8.has(_0x470a81));
+    if (_0x223b08.length === 0) {
+      console.log("[账号 " + _0x2cc18d + "] 所有关键词已用完");
+      break;
+    }
+    searchType = "PC设备";
+    userAgent = _0x56c103;
+    const _0x48f39b = _0x223b08[Math.floor(Math.random() * _0x223b08.length)];
+    _0x2534a8.add(_0x48f39b);
+    console.log("[账号 " + _0x2cc18d + "] 执行 " + searchType + " 搜索: " + _0x48f39b);
+    await _0x28fd28(_0x48f39b, userAgent, _0x504291, _0x2cc18d);
+    const _0x3b2271 = await _0x15f861(_0x504291, _0x2cc18d);
+    if (_0x3b2271 === null) {
+      {
+        console.error("[账号 " + _0x2cc18d + "] 无法获取当前积分，跳过此账号");
+        break;
+      }
+    }
+    _0x3b2271 > _0x2dc4ba ? (console.log("[账号 " + _0x2cc18d + "] " + searchType + " 积分增加，继续使用"), _0x2dc4ba = _0x3b2271, _0x2bf380 = 0) : (_0x2bf380++, console.log("[账号 " + _0x2cc18d + "] " + searchType + " 未增加积分，尝试次数: " + _0x2bf380));
+    if (_0x2bf380 >= _0x5e4d67) {
+      console.log("[账号 " + _0x2cc18d + "] " + searchType + " 多次未增加积分，结束任务");
+      const _0x523d31 = Math.floor(Math.random() * 51) + 200;
+      console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x523d31 + " 秒");
+      await new Promise(_0x42a7a1 => setTimeout(_0x42a7a1, _0x523d31 * 1000));
+      break;
+    }
+    const _0x466c2d = Math.floor(Math.random() * 51) + 200;
+    console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x466c2d + " 秒");
+    await new Promise(_0x3f2869 => setTimeout(_0x3f2869, _0x466c2d * 1000));
+  }
+  _0x2bf380 = 0;
+  while (true) {
+    const _0x5151af = _0xd7589b.filter(_0x38d92c => !_0x2534a8.has(_0x38d92c));
+    if (_0x5151af.length === 0) {
+      console.log("[账号 " + _0x2cc18d + "] 所有关键词已用完");
+      break;
+    }
+    searchType = "手机设备";
+    userAgent = _0xef84f9;
+    const _0x34fdcb = _0x5151af[Math.floor(Math.random() * _0x5151af.length)];
+    _0x2534a8.add(_0x34fdcb);
+    console.log("[账号 " + _0x2cc18d + "] 执行 " + searchType + " 搜索: " + _0x34fdcb);
+    await _0x28fd28(_0x34fdcb, userAgent, _0x504291, _0x2cc18d);
+    const _0x5d32a0 = await _0x15f861(_0x504291, _0x2cc18d);
+    if (_0x5d32a0 === null) {
+      {
+        console.error("[账号 " + _0x2cc18d + "] 无法获取当前积分，跳过此账号");
+        break;
+      }
+    }
+    _0x5d32a0 > _0x2dc4ba ? (console.log("[账号 " + _0x2cc18d + "] " + searchType + " 积分增加，继续使用"), _0x2dc4ba = _0x5d32a0, _0x2bf380 = 0) : (_0x2bf380++, console.log("[账号 " + _0x2cc18d + "] " + searchType + " 未增加积分，尝试次数: " + _0x2bf380));
+    if (_0x2bf380 >= _0x5e4d67) {
+      console.log("[账号 " + _0x2cc18d + "] " + searchType + " 多次未增加积分，结束任务");
+      break;
+    }
+    const _0x2a4952 = Math.floor(Math.random() * 51) + 200;
+    console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x2a4952 + " 秒");
+    await new Promise(_0x18c059 => setTimeout(_0x18c059, _0x2a4952 * 1000));
+  }
+}
+const _0x3a69a9 = async (_0x34c1a5, _0x59bf07) => {
+    let _0x394998 = "";
+    const _0xc68620 = "https://prod.rewardsplatform.microsoft.com/dapi/me/activities",
+      _0x3da117 = new Date().toISOString().split("T")[0],
+      _0x17953b = {
+        "amount": 1,
+        "attributes": {
+          "offerid": "Gamification_Sapphire_DailyCheckIn",
+          "date": _0x3da117,
+          "signIn": false,
+          "timezoneOffset": "08:00:00"
+        },
+        "id": "",
+        "type": 101,
+        "country": "cn",
+        "risk_context": {},
+        "channel": "SAAndroid"
+      },
+      _0x7b0773 = {
+        "Content-Type": "application/json",
+        "User-Agent": _0xef84f9,
+        "authorization": "Bearer " + _0x59bf07
       };
-      G.d(N, L);
-      var b = window;
-      var M = b.document;
-      var W = b.navigator;
-      var h = "2.1.5d";
-      var x = "xdomain";
-      var S = {
-        x: true
-      };
-      var U = M.currentScript;
-      if (!U) {
-        for (var Q = M.getElementsByTagName("script"), m = 0; m < Q.length; ++m) {
-          if ("6cc076e6727a87d6" == Q[m].getAttribute("id")) {
-            U = Q[m];
+    try {
+      const _0x52a9d3 = await _0x1bffb2.post(_0xc68620, _0x17953b, {
+          "headers": _0x7b0773
+        }),
+        _0x2afe39 = _0x52a9d3.data;
+      if (_0x2afe39.response && _0x2afe39.response.balance !== undefined) {
+        const _0x17e97b = _0x2afe39.response.balance;
+        console.log("app账号 " + _0x34c1a5 + " 签到成功 当前余额: " + _0x17e97b);
+        _0x394998 += "app账号 " + _0x34c1a5 + " 签到成功 当前余额: " + _0x17e97b + "\n";
+        return _0x394998;
+      } else console.log("无法获取余额");
+    } catch (_0x2eadb1) {
+      console.error("签到失败: ", _0x2eadb1);
+    }
+  },
+  _0x34656c = require("crypto");
+function _0xfcf8c6() {
+  const _0x185ce0 = _0x34656c.randomBytes(64);
+  return _0x185ce0.toString("hex");
+}
+async function _0x53ac49(_0x59aac0) {
+  const _0x276f9f = "https://prod.rewardsplatform.microsoft.com/dapi/me",
+    _0x201f50 = new URLSearchParams({
+      "channel": "SAAndroid",
+      "options": "613"
+    }),
+    _0x28eb48 = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + _0x59aac0
+    };
+  try {
+    const _0x4bd2f7 = await _0x1bffb2.get(_0x276f9f, {
+        "params": _0x201f50,
+        "headers": _0x28eb48
+      }),
+      _0x32d9d4 = _0x4bd2f7.data,
+      _0x31f998 = _0x32d9d4.response.promotions;
+    let _0x5e23a3 = {
+      "max": 1,
+      "progress": 0
+    };
+    if (_0x31f998) {
+      for (const _0x137e82 of _0x31f998) {
+        if (_0x137e82.attributes.offerid === "ENUS_readarticle3_30points") {
+          {
+            _0x5e23a3 = {
+              "max": Number(_0x137e82.attributes.max),
+              "progress": Number(_0x137e82.attributes.progress)
+            };
             break;
           }
         }
       }
-      if (U && "false" == U.getAttribute(x)) {
-        S[x] = false;
-      }
-    },
-    376: function (y, N, p) {
-      "use strict";
-
-      var L = {
-        n: function () {
-          return W;
-        }
-      };
-      p.d(N, L);
-      var b;
-      var M = p(170);
-      function W(h) {
-        function S(P) {
-          return P ? 1 : 0;
-        }
-        var U = "";
-        try {
-          U = M.fP.documentElement.getAttribute && M.fP.documentElement.getAttribute("webdriver");
-        } catch (P) {}
-        var Q;
-        var m = 0;
-        if (M.fo.hasOwnProperty) {
-          Object.keys(M.fP).forEach(function (E) {
-            var O = M.fo.document[E];
-            if (0 == E.indexOf("$cdc_asdjflasutopfhvcZLmcfl_") || O && O.hasOwnProperty("idPrefix_") && O.hasOwnProperty("cache_") && O.hasOwnProperty("nextId_")) {
-              m = 1;
-            }
-          });
-        }
-        if (1 != m) {
-          Q = new RegExp("^cdc_[a-zA-Z0-9]{22}_");
-          Object.keys(M.fo).forEach(function (E) {
-            "$chrome_asyncScriptInfo" != E && !Q.test(E) || (m = 1);
-          });
-        }
-        var T = new Date();
-        var V = 0;
-        T.toString = function () {
-          if (2 == ++V) {
-            return "";
-          }
-        };
-        if (b) {
-          b(T);
-        }
-        var F = 0;
-        var F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F = (F |= ((1 < V ? 1 : 0) ? 1 : 0) << 0) | S(M.fE.webdriver) << 1) | (m ? 1 : 0) << 2) | S(M.fo._phantom) << 3) | S(M.fo.callPhantom) << 4) | S(M.fo.phantom) << 5) | S(M.fo.spawn) << 6) | S(M.fo.emit) << 7 | (U ? 1 : 0) << 8) | S(M.fo.Buffer) << 9) | S(M.fo.domAutomation) << 10) | S(M.fo.webdriver) << 11) | S(M.fP.__webdriver_script_fn) << 12) | S(M.fo.fxdriver_id) << 13) | S(M.fo.__fxdriver_unwrapped) << 14) | S(M.fo.ClientUtils) << 15) | S(M.fo.__nightmare) << 16;
-        W = function () {
-          return F;
-        };
-        return F;
-      }
-      if (M.fo.console) {
-        b = M.fo.console.log.bind(M.fo.console);
-        M.fo.console.debug.bind(M.fo.console);
-      }
-    },
-    429: function (y, N, p) {
-      "use strict";
-
-      var u = {
-        fV: function () {
-          return b;
-        }
-      };
-      p.d(N, u);
-      var G = p(554);
-      var L = p(170);
-      function b(M, W, h, x) {
-        var x = x || (0, G.cd)();
-        var S = "number" == typeof h ? ((S = new Date()).setTime(S.getTime() + h), S.toGMTString()) : h;
-        L.fP.cookie = M + "=" + W + ";expires=" + S + ";path=/;domain=" + x;
-      }
-    },
-    980: function (y, N, p) {
-      "use strict";
-
-      var G = {
-        fh: function () {
-          return b;
-        }
-      };
-      p.d(N, G);
-      var L;
-      L = {
-        ua: function (M, W) {
-          if (null == M) {
-            return "";
-          }
-          var S = L.uu(M, 6, function (m) {
-            return "DGi0YA7BemWnQjCl4+bR3f8SKIF9tUz/xhr2oEOgPpac=61ZqwTudLkM5vHyNXsVJ".charAt(m);
-          });
-          if (W) {
-            return S;
-          }
-          switch (S.length % 4) {
-            default:
-              {}
-            case 0:
-              {
-                return S;
-              }
-            case 1:
-              {
-                return S + "===";
-              }
-            case 2:
-              {
-                return S + "==";
-              }
-            case 3:
-              {
-                return S + "=";
-              }
-          }
-        },
-        uu: function (M, W, x) {
-          if (null == M) {
-            return "";
-          }
-          for (var S, U, Q, m, T = {}, V = {}, F = "", P = 2, E = 3, O = 2, K = [], v = 0, J = 0, C = 0; C < M.length; C += 1) {
-            Q = M.charAt(C);
-            Object.prototype.hasOwnProperty.call(T, Q) || (T[Q] = E++, V[Q] = true);
-            m = F + Q;
-            if (Object.prototype.hasOwnProperty.call(T, m)) {
-              F = m;
-            } else {
-              if (Object.prototype.hasOwnProperty.call(V, F)) {
-                if (F.charCodeAt(0) < 256) {
-                  for (S = 0; S < O; S++) {
-                    v <<= 1;
-                    J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                  }
-                  for (U = F.charCodeAt(0), S = 0; S < 8; S++) {
-                    v = v << 1 | 1 & U;
-                    J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                    U >>= 1;
-                  }
-                } else {
-                  for (U = 1, S = 0; S < O; S++) {
-                    v = v << 1 | U;
-                    J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                    U = 0;
-                  }
-                  for (U = F.charCodeAt(0), S = 0; S < 16; S++) {
-                    v = v << 1 | 1 & U;
-                    J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                    U >>= 1;
-                  }
-                }
-                if (0 == --P) {
-                  P = Math.pow(2, O);
-                  O++;
-                }
-                delete V[F];
-              } else {
-                for (U = T[F], S = 0; S < O; S++) {
-                  v = v << 1 | 1 & U;
-                  J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                  U >>= 1;
-                }
-              }
-              if (0 == --P) {
-                P = Math.pow(2, O);
-                O++;
-              }
-              T[m] = E++;
-              F = String(Q);
-            }
-          }
-          if ("" !== F) {
-            if (Object.prototype.hasOwnProperty.call(V, F)) {
-              if (F.charCodeAt(0) < 256) {
-                for (S = 0; S < O; S++) {
-                  v <<= 1;
-                  J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                }
-                for (U = F.charCodeAt(0), S = 0; S < 8; S++) {
-                  v = v << 1 | 1 & U;
-                  J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                  U >>= 1;
-                }
-              } else {
-                for (U = 1, S = 0; S < O; S++) {
-                  v = v << 1 | U;
-                  J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                  U = 0;
-                }
-                for (U = F.charCodeAt(0), S = 0; S < 16; S++) {
-                  v = v << 1 | 1 & U;
-                  J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                  U >>= 1;
-                }
-              }
-              if (0 == --P) {
-                P = Math.pow(2, O);
-                O++;
-              }
-              delete V[F];
-            } else {
-              for (U = T[F], S = 0; S < O; S++) {
-                v = v << 1 | 1 & U;
-                J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-                U >>= 1;
-              }
-            }
-            if (0 == --P) {
-              P = Math.pow(2, O);
-              O++;
-            }
-          }
-          for (U = 2, S = 0; S < O; S++) {
-            v = v << 1 | 1 & U;
-            J == W - 1 ? (J = 0, K.push(x(v)), v = 0) : J++;
-            U >>= 1;
-          }
-          for (;;) {
-            v <<= 1;
-            if (J == W - 1) {
-              K.push(x(v));
-              break;
-            }
-            J++;
-          }
-          return K.join("");
-        }
-      };
-      var b = L;
-    },
-    606: function (y, N, p) {
-      "use strict";
-
-      var L = {
-        fD: function () {
-          return Q;
-        },
-        fy: function () {
-          return U;
-        }
-      };
-      p.d(N, L);
-      var b = "||";
-      var M = undefined;
-      function W() {
-        this.storage = {};
-      }
-      function h() {
-        return M = M || (function () {
-          try {
-            var V = "aliyun_waf_testLocalStorage";
-            localStorage.setItem(V, V);
-            localStorage.removeItem(V);
-            return 1;
-          } catch (F) {}
-        }() ? localStorage : new W());
-      }
-      W.prototype.setItem = function (m, T) {
-        this.storage[m] = T;
-      };
-      W.prototype.getItem = function (m) {
-        return this.storage[m];
-      };
-      W.prototype.removeItem = function (m) {
-        delete this.storage[m];
-      };
-      var x = {};
-      function S(m, T) {
-        T = T || 1800000;
-        return m + b + (new Date().getTime() + T);
-      }
-      function U(m, T, V) {
-        var F = h();
-        T = S(T, V);
-        x[m] = T;
-        F.setItem(m, T);
-      }
-      function Q(m) {
-        var T;
-        var V;
-        var F = h();
-        var P = x[m] || F.getItem(m);
-        return P ? (V = (T = P.split(b))[1]) && new Date().getTime() > parseInt(V) ? (F.removeItem(m), delete x[m]) : (x[m] = P, T[0]) : (x[m] = S("", 300000), "");
-      }
-    },
-    554: function (y, N, G) {
-      "use strict";
-
-      var b = {
-        fN: function () {
-          return m;
-        },
-        fx: function () {
-          return Q;
-        },
-        ft: function () {
-          return V;
-        },
-        cd: function () {
-          return S;
-        },
-        fW: function () {
-          return T;
-        },
-        fb: function () {
-          return U;
-        },
-        fM: function () {
-          return F;
-        }
-      };
-      G.d(N, b);
-      var M = G(170);
-      var W = {};
-      var x = /^(ac\.cn|ac\.id|ah\.cn|bj\.cn|club\.tw|co\.id|co\.jp|co\.kr|co\.nz|co\.uk|com\.cn|com\.hk|com\.mo|com\.my|com\.sg|com\.tw|cq\.cn|ebiz\.tw|edu\.cn|edu\.hk|edu\.mo|edu\.tw|fj\.cn|game\.tw|gd\.cn|go\.id|gov\.cn|gov\.hk|gov\.mo|gov\.my|gov\.ph|gov\.tw|gs\.cn|gx\.cn|gz\.cn|ha\.cn|hb\.cn|he\.cn|hi\.cn|hk\.cn|hl\.cn|hn\.cn|idv\.hk|idv\.tw|jl\.cn|js\.cn|jx\.cn|ln\.cn|mil\.cn|mil\.tw|mo\.cn|net\.cn|net\.hk|net\.mo|net\.tw|nm\.cn|nx\.cn|org\.cn|org\.hk|org\.mo|org\.tw|qh\.cn|sc\.cn|sd\.cn|sh\.cn|sn\.cn|sx\.cn|tj\.cn|tw\.cn|us\.org|xj\.cn|xz\.cn|yn\.cn|zj\.cn)$/;
-      function S() {
-        var P;
-        var E;
-        var O = M.fP.location.host.split(":")[0];
-        W[O] ? O = W[O] : 2 < (E = (P = O.split(".")).length) && !/^(\d+\.)*\d+$/.test(O) && (O = P[E - 2] + "." + P[E - 1], x.test(O)) && (O = P[E - 3] + "." + O);
-        return O;
-      }
-      function U(P) {
-        var E = M.fP.createElement("div");
-        E.innerHTML = "<a></a>";
-        E.firstChild.href = P;
-        E.innerHTML = E.innerHTML;
-        (P = E.firstChild).href = E.firstChild.href;
-        return {
-          protocol: P.protocol,
-          host: P.host,
-          hostname: P.hostname,
-          port: P.port,
-          pathname: "/" === P.pathname.substr(0, 1) ? P.pathname : "/" + P.pathname,
-          search: P.search,
-          hash: P.hash,
-          fi: P.href
-        };
-      }
-      function Q(P, E) {
-        if (0 != Object.keys(E).length) {
-          var O;
-          var K = "";
-          for (O in E) K += encodeURIComponent(O) + "=" + encodeURIComponent(E[O]) + "&";
-          K = K.slice(0, K.length - 1);
-          if (0 == P.length) {
-            P = "?" + K;
-          } else {
-            for (var v = P.slice(1).split("&"), J = [], C = Object.keys(E), H = 0; H < v.length; H++) {
-              O = decodeURIComponent(v[H].split("=", 1)[0]);
-              if (-1 == C.indexOf(O)) {
-                J.push(v[H]);
-              }
-            }
-            P = "?" + (0 == J.length ? "" : J.join("&") + "&") + K;
-          }
-        }
-        return P;
-      }
-      function m(P) {
-        return !(!P.protocol || "data:" != P.protocol && "blob:" != P.protocol);
-      }
-      function T(P, E) {
-        var O = m(P);
-        var K = P.pathname;
-        if (O && 0 == K.indexOf("/")) {
-          K = P.pathname.slice(1);
-        }
-        return P.protocol + (O ? "" : "//" + P.host) + K + P.search + (E ? "" : P.hash);
-      }
-      function V(P, E) {
-        return M.fo.top !== M.fo.self || !(m(P = U(P)) || (E = U(E), P.host == E.host && P.protocol == E.protocol));
-      }
-      function F(P, E) {
-        if (-1 == P.indexOf(E + "=")) {
-          return P;
-        }
-        var H = U(P);
-        if (!H.search) {
-          return P;
-        }
-        var v = H.search.slice(1).split("&");
-        if (0 == v.length) {
-          return P;
-        }
-        for (var J = [], C = 0; C < v.length; ++C) {
-          if (0 != v[C].indexOf(E + "=")) {
-            J.push(v[C]);
-          }
-        }
-        0 == J.length ? H.search = "" : H.search = "?" + J.join("&");
-        return T(H);
-      }
     }
-  };
-  var D = {};
-  function R(y) {
-    var N = D[y];
-    var p = {
-      exports: {}
+    return _0x5e23a3;
+  } catch (_0x5420b8) {
+    console.error("请求失败:", _0x5420b8);
+    return {
+      "max": 1,
+      "progress": 0
     };
-    undefined !== N || (N = D[y] = p, w[y](N, N.exports, R));
-    return N.exports;
   }
-  R.d = function (y, N) {
-    for (var p in N) if (R.fc(N, p) && !R.fc(y, p)) {
-      Object.defineProperty(y, p, {
-        enumerable: true,
-        get: N[p]
-      });
-    }
+}
+async function _0x257cb8(_0x3b699c, _0x9d5d45) {
+  let _0x25019c = "";
+  const _0x32d78b = "https://prod.rewardsplatform.microsoft.com/dapi/me/activities";
+  let _0x40074e = 0,
+    _0x1dd4b7 = 0;
+  const _0x501026 = {
+    "Content-Type": "application/json",
+    "User-Agent": _0xef84f9,
+    "authorization": "Bearer " + _0x9d5d45
   };
-  R.fc = function (y, N) {
-    return Object.prototype.hasOwnProperty.call(y, N);
-  };
-  R.r = function (y) {
-    var N = {
-      value: true
+  for (let _0x331381 = 0; _0x331381 < 15; _0x331381++) {
+    const _0x29bc27 = {
+      "amount": 1,
+      "country": "cn",
+      "id": _0xfcf8c6(),
+      "type": 101,
+      "attributes": {
+        "offerid": "ENUS_readarticle3_30points"
+      }
     };
-    if ("undefined" != typeof Symbol && Symbol.toStringTag) {
-      Object.defineProperty(y, Symbol.toStringTag, {
-        value: "Module"
-      });
-    }
-    Object.defineProperty(y, "__esModule", N);
-  };
-  !function () {
-    "use strict";
-
-    var AA = R(554);
-    var Aw = R(429);
-    var AD = R(980);
-    var AR = R(170);
-    var Ay = R(376);
-    function AN(wJ, wr, wC) {
-      for (var wH = 0, wl = wr, wj = wJ.length, wn = wC || 1; wl < wj;) {
-        wH = (wH = (wH << 5) - wH) + wJ.charCodeAt(wl) >>> 0;
-        wl += wn;
-      }
-      return wH;
-    }
-    AG = [];
-    AL = AR.fP.documentElement;
-    Ao = AL.doScroll;
-    Ab = "DOMContentLoaded";
-    Ax = "addEventListener";
-    AM = "onreadystatechange";
-    AW = "readyState";
-    Ah = (Ao ? /^loaded|^c/ : /^loaded|c/).test(AR.fP[AW]);
-    if (AR.fP[Ax]) {
-      AR.fP[Ax](Ab, Au = function () {
-        AR.fP.removeEventListener(Ab, Au, false);
-        AS();
-      }, false);
-    }
-    if (Ao) {
-      AR.fP.attachEvent(AM, Au = function () {
-        if (/^c/.test(AR.fP[AW])) {
-          AR.fP.detachEvent(AM, Au);
-          AS();
-        }
-      });
-    }
-    var Ap;
-    var Au;
-    var AG;
-    var AL;
-    var Ab;
-    var AM;
-    var AW;
-    var Ah;
-    Ao ? Ap = function (wJ) {
-      if (self != top) {
-        Ah ? wJ() : AG.push(wJ);
-      } else {
-        try {
-          AL.doScroll("left");
-        } catch (wC) {
-          return setTimeout(function () {
-            Ap(wJ);
-          }, 50);
-        }
-        wJ();
-      }
-    } : Ap = function (wJ) {
-      Ah ? wJ() : AG.push(wJ);
-    };
-    var Ax = Ap;
-    function AS(wJ) {
-      for (Ah = 1; wJ = AG.shift();) {
-        wJ();
-      }
-    }
-    var AU;
-    var AQ = false;
-    function Ad() {
-      if (AR.fo.aliyun_csp_inline_test) {
-        AQ = true;
-        delete AR.fo.aliyun_csp_inline_test;
-      }
-      AU.remove();
-      delete AR.fo.aliyun_csp_inline_test_func;
-    }
-    function Am(wJ) {
-      var wr = AR.fP.createElement("style");
-      wr.type = "text/css";
-      try {
-        wr.appendChild(AR.fP.createTextNode(wJ));
-      } catch (wC) {
-        wr.styleSheet.cssText = wJ;
-      }
-      return wr;
-    }
-    function AT() {
-      return AR.fP.head || AR.fP.getElementsByTagName("head")[0];
-    }
-    AU = document.createElement("script");
-    AR.fo.aliyun_csp_inline_test_func = AU.text = "window.aliyun_csp_inline_test = 1;aliyun_csp_inline_test_func()";
-    Ao = document.head.firstChild;
-    AR.fo.aliyun_csp_inline_test_func = Ad;
-    document.head.insertBefore(AU, Ao);
-    setTimeout(function () {
-      Ad();
-    }, 200);
-    if (!AR.fo._waf_async_initialized1) {
-      var AF;
-      var Ao = function (wJ, wr) {
-        var wk = 0;
-        return function () {
-          var wq = arguments;
-          var wI = Date.now();
-          if (wr <= wI - wk) {
-            wk = wI;
-            wJ.apply(this, wq);
-          }
-        };
-      };
-      AR.fo._waf_async_initialized1 = true;
-      var AP = new Date().getTime();
-      var AE = "websdk" + AR.fs;
-      var As = [];
-      var Ai = [];
-      var Ac = [];
-      var AO = [];
-      var AK = [];
-      var Aa = false;
-      if ("ontouchstart" in window || navigator.maxTouchPoints) {
-        Aa = true;
-      }
-      var Av = [0];
-      var AJ = (0, AA.cd)();
-      var Ar = Ao(function () {
-        (0, Aw.fV)("ssxmod_itna", Aa ? AD.fh.ua(As.join("^") + "M" + AO.length + "^" + AK.length + "^" + Av.length) : AD.fh.ua(As.join("^") + "P" + Ai.length + "^" + Ac.length + "^" + Av.length), wb, AJ);
-        (0, Aw.fV)("ssxmod_itna2", Aa ? AD.fh.ua(As.slice(0, 4).join("^") + "tm" + w0 + "|" + AO.join("|") + "tc" + w3 + "|" + AK.join("|") + "kb" + Av.join("|")) : AD.fh.ua(As.slice(0, 4).join("^") + "mm" + An + "|" + Ai.join("|") + "mc" + AZ + "|" + Ac.join("|") + "kb" + Av.join("|")), wb, AJ);
-      }, 60);
-      undefined !== AR.fP.hidden ? (AF = "hidden", Aq = "visibilitychange") : undefined !== AR.fP.mozHidden ? (AF = "mozHidden", Aq = "mozvisibilitychange") : undefined !== AR.fP.msHidden ? (AF = "msHidden", Aq = "msvisibilitychange") : undefined !== AR.fP.webkitHidden && (AF = "webkitHidden", Aq = "webkitvisibilitychange");
-      AR.fP.addEventListener && AF ? AR.fP.addEventListener(Aq, function () {
-        if (!AR.fP[AF] && 20 < As.length) {
-          As[20]++;
-        }
-      }) : AR.fP.attachEvent && AR.fP.attachEvent("on" + Aq, function () {
-        if (!AR.fP[AF] && 20 < As.length) {
-          As[20]++;
-        }
-      });
-      var AC = 0;
-      var AH = 0;
-      var Al = AP;
-      var Aj = 0;
-      var An = 0;
-      var Ak = !AR.fP.addEventListener && AR.fP.attachEvent;
-      var Aq = Ao(function (wJ) {
-        var wr;
-        var wC;
-        var wH;
-        var wl;
-        Aa || (Ak && (wJ = AR.fo.event), 100 < Aj && (wr = Ai[1].split("+"), wC = Ai[0].split("+"), Ai[1] = parseInt(wr[0]) + parseInt(wC[0]) + "+" + (parseInt(wr[1]) + parseInt(wC[1])) + "+" + (parseInt(wr[2]) + parseInt(wC[2])), Ai.shift()), Aj++, wr = wJ.pageX, wC = wJ.pageY, undefined === wr && (AR.fP.body ? wH = AR.fP.body.scrollLeft : wH = 0, AR.fP.body ? wl = AR.fP.body.scrollTop : wl = 0, wr = wJ.clientX + wH, wC = wJ.clientY + wl), wH = wr - AC, wJ = wC - AH, wl = new Date().getTime() - Al, 1 == Aj && (An = wl), As[3]++, Ai.push(wH + "+" + wJ + "+" + wl), Ar(), AC = wr, AH = wC, Al += wl);
-      }, 30);
-      AR.fP.addEventListener ? AR.fP.addEventListener("mousemove", Aq, true) : AR.fP.attachEvent && AR.fP.attachEvent("onmousemove", Aq);
-      var AI = AP;
-      var Az = 0;
-      var AZ = 0;
-      var Aq = function (wJ) {
-        var wr;
-        var wC;
-        var wH;
-        var wl;
-        Aa || (Ak && (wJ = AR.fo.event), 10 < Az && Ac.shift(), Az++, wH = wJ.pageX, wl = wJ.pageY, undefined === wH && (AR.fP.body ? wr = AR.fP.body.scrollLeft : wr = 0, AR.fP.body ? wC = AR.fP.body.scrollTop : wC = 0, wH = wJ.clientX + wr, wl = wJ.clientY + wC), wr = parseInt(wH), wC = parseInt(wl), wH = new Date().getTime() - AI, wl = wJ.which || 9, 1 == Az && (AZ = wH), As[3]++, Ac.push(wl + ("mousedown" == wJ.type ? "0" : "1") + "+" + wr + "+" + wC + "+" + wH), Ar(), AI += wH);
-      };
-      AR.fP.addEventListener ? (AR.fP.addEventListener("mousedown", Aq, true), AR.fP.addEventListener("mouseup", Aq, true)) : AR.fP.attachEvent && (AR.fP.attachEvent("onmousedown", Aq), AR.fP.attachEvent("onmouseup", Aq));
-      var AB = 0;
-      var Ag = 0;
-      var AX = AP;
-      var AY = 0;
-      var w0 = 0;
-      var Aq = Ao(function (wJ) {
-        var wr;
-        var wC;
-        var wH;
-        if (Aa = true) {
-          Ak && (wJ = AR.fo.event);
-          100 < AY && (wr = AO[1].split("+"), wC = AO[0].split("+"), AO[1] = parseInt(wr[0]) + parseInt(wC[0]) + "+" + (parseInt(wr[1]) + parseInt(wC[1])) + "+" + (parseInt(wr[2]) + parseInt(wC[2])), AO.shift());
-          AY++;
-          wr = parseInt(wJ.touches[0].pageX) - AB;
-          wC = parseInt(wJ.touches[0].pageY) - Ag;
-          wH = new Date().getTime() - AX;
-          As[3]++;
-          AO.push(wr + "+" + wC + "+" + wH);
-          1 == AY && (w0 = wH);
-          Ar();
-          AB = parseInt(wJ.touches[0].pageX);
-          Ag = parseInt(wJ.touches[0].pageY);
-          AX += wH;
-        }
-      }, 30);
-      AR.fP.addEventListener ? AR.fP.addEventListener("touchmove", Aq, true) : AR.fP.attachEvent && AR.fP.attachEvent("ontouchmove", Aq);
-      var w1 = AP;
-      var w2 = 0;
-      var w3 = 0;
-      var Ao = function (wJ) {
-        var wr;
-        var wC;
-        var wH;
-        if ("touchstart" == wJ.type) {
-          wr = (screen.availWidth - AR.fo.outerWidth < 10) << 0;
-          As[21] = wr;
-        }
-        if (Aa = true) {
-          Ak && (wJ = AR.fo.event);
-          10 < w2 && AK.shift();
-          w2++;
-          wr = parseInt(wJ["touchstart" == wJ.type ? "touches" : "changedTouches"][0].pageX);
-          wC = parseInt(wJ["touchstart" == wJ.type ? "touches" : "changedTouches"][0].pageY);
-          wH = new Date().getTime() - w1;
-          As[3]++;
-          AK.push(("touchstart" == wJ.type ? "0" : 1) + "+" + wr + "+" + wC + "+" + wH);
-          1 == w2 && (w3 = wH);
-          Ar();
-          w1 += wH;
-        }
-      };
-      AR.fP.addEventListener ? (AR.fP.addEventListener("touchstart", Ao, true), AR.fP.addEventListener("touchend", Ao, true)) : AR.fP.attachEvent && (AR.fP.attachEvent("ontouchstart", Ao), AR.fP.attachEvent("ontouchend", Ao));
-      var w4 = AP;
-      var w5 = 0;
-      var Aq = function (wJ) {
-        var wr;
-        if (w5 <= 20) {
-          (Ak ? wJ = AR.fo.event : wJ = wJ).isComposing && (Av[0] = 1);
-          w5++;
-          wr = wJ.code;
-          (/(Key)[a-zA-Z]/.test(wr) || /(Digit)[0-9]/.test(wr)) && (wr = "");
-          wr = new Date().getTime() - w4;
-          As[3]++;
-          Av.push(("keydown" == wJ.type ? 0 : 1) + wr);
-          Ar();
-          w4 += wr;
-        }
-      };
-      AR.fP.addEventListener ? (AR.fP.addEventListener("keydown", Aq, true), AR.fP.addEventListener("keyup", Aq, true)) : AR.fP.attachEvent && (AR.fP.attachEvent("onkeydown", Aq), AR.fP.attachEvent("onkeyup", Aq));
-      As.push(AN((4294967295 * Math.random() >>> 0) + "|" + AP, 0, 1));
-      As.push(AE);
-      As.push(AP);
-      As.push(1);
-      for (var Ao = !!(AR.fo.webkitRTCPeerConnection || AR.fo.Element && AR.fo.Element.prototype && AR.fo.Element.prototype.webkitMatchesSelector) << 0, wp = (Ao = (Ao = (Ao = (Ao |= (undefined !== AR.fo.mozPaintCount) << 1) | (undefined !== AR.fo.mozInnerScreenX) << 2) | !!AR.fo.Debug << 3) | !!AR.fo.WebKitPlaybackTargetAvailabilityEvent << 4, 0), wu = ["zoom", "resize", "text-rendering", "text-align-last", "-webkit-hyphens"], wG = AR.fP.createElement("cc"), wD = 0; wD < wu.length; wD++) {
-        wp |= (undefined !== wG.style[wu[wD]] ? 1 : 0) << wD;
-      }
-      As.push(Ao + "|" + wp);
-      for (var Ao = AR.fE.language || AR.fE.userLanguage, Ao = (As.push(Ao), new Date().getTimezoneOffset()), w6 = (As.push(Ao), AR.fo.hasOwnProperty ? Ao = (Ao = !![].copyWithin << 0, Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao |= !![].includes << 1) | AR.fo.hasOwnProperty("Touch") << 2) | AR.fo.hasOwnProperty("Proxy") << 3) | (AR.fo.Symbol && AR.fo.Symbol.hasOwnProperty && AR.fo.Symbol.hasOwnProperty("match")) << 4) | !!function () {}.name << 5) | (AR.fo.Object.hasOwnProperty && AR.fo.Object.hasOwnProperty("values")) << 6) | (AR.fo.OfflineAudioContext && AR.fo.OfflineAudioContext.prototype.hasOwnProperty("close")) << 7, wf = AR.fP.createElement("canvas"), Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao = (Ao |= !!"".padStart << 9) | (AR.fo.PointerEvent && AR.fo.PointerEvent.prototype.hasOwnProperty("getCoalescedEvents")) << 10) | AR.fo.hasOwnProperty("BudgetService") << 12) | !(!wf || !wf.getAttributeNames) << 13) | !(!AR.fo.performance || undefined === AR.fo.performance.timeOrigin) << 14) | (AR.fo.Intl && AR.fo.Intl.hasOwnProperty && AR.fo.Intl.hasOwnProperty("PluralRules")) << 15) | AR.fo.hasOwnProperty("getMatchedCSSRules") << 16) | AR.fo.hasOwnProperty("PerformanceServerTiming") << 17) | !![].values << 18) | AR.fo.hasOwnProperty("BigInt") << 19) | (undefined !== AR.fP.wasDiscarded) << 20, w6 = (AR.fo.Symbol && AR.fo.Symbol.hasOwnProperty && AR.fo.Symbol.hasOwnProperty("species")) << 0, Ao + "|" + (w6 = (w6 = (w6 = (w6 = (w6 = (w6 = (w6 = (w6 = (w6 = (w6 = (w6 |= AR.fo.hasOwnProperty("Reflect") << 1) | (AR.fo.Symbol && AR.fo.Symbol.hasOwnProperty && AR.fo.Symbol.hasOwnProperty("toPrimitive")) << 2) | (AR.fo.WeakMap && AR.fo.WeakMap.prototype.hasOwnProperty("clear")) << 3) | (AR.fo.DOMTokenList && AR.fo.DOMTokenList.prototype.hasOwnProperty("replace")) << 4) | (AR.fo.Symbol && AR.fo.Symbol.hasOwnProperty && AR.fo.Symbol.hasOwnProperty("hasInstance")) << 5) | AR.fo.hasOwnProperty("isSecureContext") << 6) | AR.fo.self.hasOwnProperty("origin") << 7) | (AR.fo.PerformanceTiming && AR.fo.PerformanceTiming.prototype.hasOwnProperty("secureConnectionStart")) << 8) | AR.fo.hasOwnProperty("showModalDialog") << 9) | (AR.fo.HTMLDocument && AR.fo.HTMLDocument.prototype.hasOwnProperty("getSelection")) << 10) | (AR.fo.HTMLMediaElement && AR.fo.HTMLMediaElement.prototype.hasOwnProperty("mozAutoplayEnabled")) << 11)) : Ao = "0|0", As.push(Ao), AR.fo.screen), Ao = AR.fP.documentElement, Aq = w6.width || 0, AE = w6.height || 0, w7 = AR.fo.innerWidth || Ao && Ao.clientWidth || AR.fP.body && AR.fP.body.clientWidth || 0, Ao = AR.fo.innerHeight || Ao && Ao.clientHeight || AR.fP.body && AR.fP.body.clientHeight || 0, w8 = AR.fo.screenTop || AR.fo.screenY || 0, w9 = AR.fo.screenLeft || AR.fo.screenX || 0, Aq = (As.push(Aq + "|" + AE + "|" + w7 + "|" + Ao + "|" + w8 + "|" + w9), AR.fo.hasOwnProperty && AR.fo.hasOwnProperty("history") ? AR.fo.history.length : -1), AE = (As.push(Aq), AR.fE.platform), w7 = (As.push(AE), AR.fE.hardwareConcurrency || 0), Ao = (As.push(w7), ""), wf = AR.fP.createElement("canvas"), AE = (wf.getContext ? (w8 = wf.getContext("webgl") || wf.getContext("experimental-webgl")) ? (w9 = w8.getExtension("WEBGL_debug_renderer_info")) ? Ao = (Aq = w8.getParameter(w9.UNMASKED_VENDOR_WEBGL), w8.getParameter(w9.UNMASKED_RENDERER_WEBGL) + "|" + Aq) : Ao = "ns|3" : Ao = "ns|2" : Ao = "ns|1", As.push(Ao), w6.colorDepth + "|" + w6.pixelDepth), w7 = (As.push(AE), AR.fE.oscpu || 0), wA = (As.push(w7), AR.fo.hasOwnProperty ? wL = (wL = AR.fo.hasOwnProperty("ApplePaySession") << 0, (wL = (wL = (wL |= AR.fo.hasOwnProperty("ApplePayError") << 1) | AR.fo.hasOwnProperty("Bluetooth") << 2) | AR.fo.hasOwnProperty("BluetoothDevice") << 3) | AR.fo.hasOwnProperty("BluetoothUUID") << 4) : wL = 0, As.push(wL), ""), ww = AR.fE.plugins, wD = 0; ww && wD < ww.length; wD++) {
-        wA += ww[wD].name + ww[wD].filename;
-        if (ww[wD].version) {
-          wA += ww[wD].version + "<br>";
-        }
-        for (var wR = 0; wR < ww[wD].length; wR++) {
-          var wy = ww[wD][wR];
-          var wN = 0;
-          if (wy ? wN = wy.type : wN = wN) {
-            wA += wN.substring(12);
-          }
-        }
-      }
-      wA = (ww ? ww.length : 0) + "|" + AN(wA, 0, 1);
-      As.push(wA);
-      As.push((wf = AR.fP.createElement("canvas"), w8 = "", wf.getContext && (w9 = wf.getContext("2d"), wf.height = 60, wf.width = 400, wf.style.display = "inline", w9.textBaseline = "alphabetic", w9.fillStyle = "#f60", w9.fillRect(125, 1, 62, 20), w9.fillStyle = "#069", w9.font = "11pt no-real-font-123", w9.fillText("Cwm fjordbank glyphs vext quiz, 😃", 2, 15), w9.fillStyle = "rgba(102, 204, 0, 0.7)", w9.font = "18pt Arial", w9.fillText("Cwm fjordbank glyphs vext quiz, 😃", 4, 45), w8 = AN(w8 = wf.toDataURL() || "", 0, 1)), w8));
-      var Ao = (Aq = AR.fE.userAgent) ? AN(Aq, 0, 1) : 0;
-      As.push(Ao);
-      var AE = AR.fP.hidden || AR.fP.mozHidden ? 0 : 1;
-      As.push(AE);
-      As.push(0);
-      var w7 = (w6.availWidth - AR.fo.outerWidth < 10) << 0;
-      As.push(w7);
-      var wL = (0, Ay.n)(true);
-      As.push(wL);
-      var wb = new Date(AP + 15552000000).toUTCString();
-      Ar();
-    }
-    var wM = R(721);
-    var wW = XMLHttpRequest.prototype;
-    var wh = wW.send;
-    var wx = wW.open;
-    var wS = wW.addEventListener;
-    var wU = wW.removeEventListener;
-    var wQ = wW.setRequestHeader;
-    var wd = Object.getOwnPropertyDescriptor(wW, "responseText");
-    var wm = Object.getOwnPropertyDescriptor(wW, "responseType");
-    var wT = Object.getOwnPropertyDescriptor(wW, "response");
-    var wt = R(606);
-    var wV = "acw-sc--v3";
-    var wF = "acw_sc__v3";
-    function wo(wJ) {
-      return wJ + "_" + wF;
-    }
-    function wP(wJ, wr) {
-      var wC;
-      if (AR.fm[AR.fT] && wr && (wC = (0, AA.fb)(wJ)).host && (0, AA.ft)(wJ, location.href)) {
-        (0, wt.fy)(wo(wC.host), wr);
-      }
-    }
-    var wE = R(540);
-    var ws = {};
-    function wi(wJ) {
-      if (!AR.fm[AR.fT] || !(0, AA.ft)(wJ, location.href)) {
-        return wJ;
-      }
-      var wr;
-      var wC = (0, AA.fb)(wJ);
-      var wH = {};
-      var wl = 0;
-      for (wr in ws) {
-        var wj = (0, wt.fD)(ws[wr](wC.host));
-        if (wj) {
-          wH[wr] = wj;
-          ++wl;
-        }
-      }
-      return 0 == wl ? wJ : (wC.search = (0, AA.fx)(wC.search, wH), (0, AA.fW)(wC));
-    }
-    ws[wE.fd] = wE.fU;
-    ws[wF] = wo;
-    var wc = R(669);
-    function wO(wJ) {
-      return ("function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? wO = function (wC) {
-        return typeof wC;
-      } : wO = function (wC) {
-        return wC && "function" == typeof Symbol && wC.constructor === Symbol && wC !== Symbol.prototype ? "symbol" : typeof wC;
-      })(wJ);
-    }
-    var wK;
-    var wa = R(669).fA;
-    var wv = R(669).f6;
-    AR.fo._waf_async_initialized || (AR.fo._waf_is_mobile = false, AR.fo._waf_traceid = "", AR.fo._waf_nc_width = 300, AR.fo._waf_websdk_version = AR.fs, w9 = AR.fE.userAgent || AR.fE.vendor || AR.fo.opera, (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(w9) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(w9.substr(0, 4))) && (AR.fo._waf_is_mobile = true), (wK = {
-      fO: [],
-      fK: [],
-      fe: undefined,
-      fa: undefined,
-      fv: undefined,
-      fJ: undefined,
-      fr: undefined,
-      fC: function (wJ) {
-        if (wJ) {
-          switch (wJ.which) {
-            case "jsclg":
-              {
-                this.fK.push(wJ);
-                break;
-              }
-            case "captcha":
-              {
-                this.fO.push(wJ);
-              }
-          }
-        }
-      },
-      fH: !(AR.fo._waf_async_initialized = true),
-      fl: 0,
-      fj: function (wJ) {
-        var wr;
-        var wC = wJ.__send_headers;
-        for (wr in wK.fa.apply(wJ, wJ.openArgs), wJ.__send_headers = wC) wQ.call(wJ, wr, wC[wr]);
-      },
-      fn: function () {
-        if (AR.fo.XMLHttpRequest) {
-          wK.fa = wW.open = function () {
-            this.scene = undefined;
-            this.__send_headers = {};
-            this.__setHeaderHooked || (this.setRequestHeader = function (wl, wj) {
-              this.__send_headers[wl] = wj;
-              wQ.call(this, wl, wj);
-            }, this.__setHeaderHooked = true);
-            var wH = arguments[1];
-            wH = wi(wH = wv(wH));
-            arguments[1] = wH;
-            this.openArgs = arguments;
-            wx.apply(this, arguments);
-          };
-          wK.fe = wW.send = function (wH) {
-            if (this.scene) {
-              delete this.scene;
-            }
-            this.sendBody = wH;
-            var wl = wK.fk(this.openArgs[1]);
-            var wl = wa(wl, wH);
-            if (wl) {
-              this.openArgs[1] = wl;
-              var wj;
-              var wn = this.__send_headers;
-              for (wj in wx.apply(this, this.openArgs), this.__send_headers = wn) wQ.apply(this, [wj, wn[wj]]);
-            }
-            this.ori_event && this.ori_event.readystatechange && 0 < this.ori_event.readystatechange.length || wK.fv.call(this, "readystatechange", function () {});
-            wh.call(this, wH);
-          };
-          wK.fe = wW.send;
-          wK.fv = wW.addEventListener = function (wH, wl) {
-            this.ori_event || (this.ori_event = {});
-            var wn;
-            var wk;
-            var wq = wl;
-            "readystatechange" != wH ? wl = (wk = wl, function (wI) {
-              if (!this.scene && wk) {
-                wk.call(this, wI);
-              }
-            }) : wl = (wn = wl, function (wI) {
-              if (!this.scene) {
-                var wZ = this.openArgs[1];
-                4 === this.readyState && this.fq && (0, AA.ft)(wZ, location.href) && (wB = this.getAllResponseHeaders()) && -1 < wB.indexOf(wV) && (this.fq = false, wP(wZ, this.getResponseHeader(wV)));
-                if (4 === this.readyState && wK.fI(this.status, this.getResponseHeader("Content-Type"))) {
-                  var wB = "";
-                  try {
-                    wB = wd.get.call(this);
-                  } catch (wX) {}
-                  var wg = this;
-                  wK.fz(wB, function (wY) {
-                    "dySig" == (wg.scene = wY) ? AR.fo.setTimeout(function () {
-                      wK.fj(wg);
-                      wK.fe.call(wg, wg.sendBody);
-                    }) : wK.fC({
-                      type: "xhr",
-                      which: wY,
-                      fZ: wg
-                    });
-                  }, this.openArgs[1], false === this.openArgs[2]);
-                }
-                if (wn && !this.scene) {
-                  wn.call(this, wI);
-                }
-              }
-            });
-            wS.call(this, wH, wl);
-            this.ori_event[wH] || (this.ori_event[wH] = []);
-            this.ori_event[wH].push([wq, wl]);
-          };
-          wK.fJ = wW.removeEventListener = function (wH, wl) {
-            if (this.ori_event) {
-              for (var wj = this.ori_event[wH], wn = wl, wk = 0; wk < wj.length; ++wk) {
-                if (wj[wk][0] == wl) {
-                  wn = wj[wk][1];
-                  wj.splice(wk, 1);
-                  break;
-                }
-              }
-              wU.call(this, wH, wn);
-            }
-          };
-          for (var wr = ["abort", "error", "load", "loadend", "loadstart", "progress", "timeout", "readystatechange"], wC = 0; wC < wr.length; ++wC) {
-            !function (wH) {
-              Object.defineProperty(wW, "on" + wH, {
-                get: function () {
-                  return this.fB ? this.fB["on" + wH] : undefined;
-                },
-                set: function (wl) {
-                  this.fB || (this.fB = {});
-                  if (this.fB["on" + wH]) {
-                    wK.fJ.call(this, wH, this.fB["on" + wH]);
-                    delete this.fB["on" + wH];
-                  }
-                  if (wl) {
-                    wK.fv.call(this, wH, wl);
-                    this.fB["on" + wH] = wl;
-                  }
-                },
-                configurable: true
-              });
-            }(wr[wC]);
-          }
-          Object.defineProperty(wW, "responseType", {
-            get: function () {
-              return "json" != this.__real_responseType ? wm.get.call(this) : "json";
-            },
-            set: function (wH) {
-              this.__real_responseType = wH;
-              wm.set.call(this, "json" == wH ? "text" : wH);
-            },
-            configurable: true
-          });
-          Object.defineProperty(wW, "response", {
-            get: function () {
-              if ("json" != this.__real_responseType) {
-                return wT.get.call(this);
-              }
-              try {
-                return JSON.parse(wd.get.call(this));
-              } catch (wH) {
-                return null;
-              }
-            },
-            configurable: true
-          });
-          Object.defineProperty(wW, "responseText", {
-            get: function () {
-              if ("json" != this.__real_responseType) {
-                return wd.get.call(this);
-              }
-              throw new Error("The value is only accessible if the object's 'responseType' is '' or 'text' (was 'json')");
-            },
-            configurable: true
-          });
-          XMLHttpRequest._waf_hook = true;
-        }
-      },
-      fz: function (wJ, wr, wC, wH) {
-        var wl = (0, AA.fb)(wC);
-        var wj = "";
-        var wn = "";
-        if (!(0, AA.fN)(wl)) {
-          if (wJ && "string" == typeof wJ && -1 < wJ.indexOf("initAli".concat("yunCaptcha")) && /userUserId: ?requestInfo.userUserId/.test(wJ) && -1 < wJ.indexOf("window._w".concat("af_is_mobile"))) {
-            wj = "captcha";
-            wn = "2";
-          } else {
-            if (wJ && "string" == typeof wJ && -1 < wJ.indexOf("appkey:".concat(" \"CF_APP_WAF\", // 应用鏍囪瘑"))) {
-              wj = "captcha";
-            } else {
-              if (wJ && "string" == typeof wJ && -1 < wJ.indexOf("acw_s".concat("c__v2")) && -1 < wJ.indexOf("var arg1")) {
-                wj = "jsclg";
-              } else {
-                if (wJ && "string" == typeof wJ && (0, wc.ff)(wJ)) {
-                  if (-1 < wC.indexOf((0, wc.f8)(wl.host))) {
-                    (0, wc.f7)();
-                  }
-                  return !(wc.f5 > wc.f9 || ((0, wc.f4)(wl), wr("dySig"), 0));
-                }
-              }
-            }
-          }
-          if ("" != wj) {
-            switch (wr(wj), wj) {
-              case "jsclg":
-                {
-                  var wk = wJ.split("var arg1='")[1].split("';")[0];
-                  if (40 === wk.length) {
-                    (0, wM.fF)(wk, wC);
-                    wH ? wK.fg() : AR.fo.setTimeout(wK.fg.bind(wK));
-                  } else {
-                    var wq = /<script\sname="aliyunwaf_6a6f5ea8">(.+)?<\/script>/gm.exec(wJ);
-                    var wI = AR.fo.arg1;
-                    AR.fo.arg1 = wk;
-                    AR.fo.nothing2reload10ba = function (wY) {
-                      AR.fo.arg1 = wI;
-                      (0, wE.fS)(wC, wY);
-                      wz.remove();
-                      delete AR.fo.nothing2reload10ba;
-                      wH ? wK.fg() : AR.fo.setTimeout(wK.fg.bind(wK));
-                    };
-                    var wz = AR.fP.createElement("script");
-                    wz.name = "aliyunwaf_6a6f5ea8";
-                    AQ ? wz.innerText = wq[1] : wz.src = "/nfb8ouq4/om6lhs71/109xfjkc";
-                    try {
-                      AT().appendChild(wz);
-                    } catch (wY) {}
-                  }
-                  return true;
-                }
-              case "captcha":
-                {
-                  var wk = "cn";
-                  var wq = "0b72f618-4c1-4aba-9a78-f" + new Date().getTime() + "ba";
-                  var wZ = {};
-                  var wB = /var requestInfo = ({[\s\S]*?});/g.exec(wJ);
-                  if (null !== wB && (wq = (wZ = new Function("return " + wB[1])()).token), "2" === wn) {
-                    if (wZ.region && "sgp" == wZ.region) {
-                      wk = "en";
-                    }
-                    wZ.traceid ? AR.fo._waf_traceid = wZ.traceid : AR.fo._waf_traceid = wK.fX(wJ);
-                  } else {
-                    AR.fo._waf_traceid = wK.fX(wJ);
-                    if (!wK.fH) {
-                      var wg;
-                      var wX = /window.(aliyun_captcha(id|trace)_[0-9a-f]{4}) ='([0-9a-f]+)';/gm;
-                      for (wZ.fY = []; null !== (wg = wX.exec(wJ));) {
-                        if (wg.index === wX.lastIndex) {
-                          wX.lastIndex++;
-                        }
-                        wZ.fY.push(wg[1]);
-                        if (wg[1] && wg[3]) {
-                          AR.fo[wg[1]] = wg[3];
-                        }
-                      }
-                    }
-                    if (-1 < wJ.indexOf("language: \"en\",//语言包，默认中文") || -1 < wJ.indexOf("language: \"en\", //语言包，默认中文")) {
-                      wk = "en";
-                    }
-                  }
-                  wK.A0(wq, wk, wn, wZ);
-                  return true;
-                }
-            }
-          }
-        }
-        return false;
-      },
-      A1: function () {
-        var wr;
-        var wC;
-        if (AR.fo.fetch) {
-          wr = Request;
-          AR.fo.Request = function (wH, wl) {
-            var wj = new wr(wH, wl);
-            if (wH instanceof wr) {
-              wl = Object.assign(wH.init ? Object.assign({}, wH.init) : {}, wl);
-              wH = wH.input;
-            }
-            wj.input = wH;
-            wj.init = wl;
-            return wj;
-          };
-          wC = fetch;
-          AR.fo.fetch = function () {
-            var wH = arguments[0];
-            var wl = arguments[1];
-            if (wH instanceof wr) {
-              wH = arguments[0].input;
-              wl = arguments[0].init;
-            }
-            null == wl ? wl = {
-              credentials: "same-origin"
-            } : wl.credentials || (wl.credentials = "same-origin");
-            wH = wi(wH = wv(wH));
-            var wj = wK.fk(wH);
-            var wj = wa(wj, wl.body);
-            if (wj) {
-              wH = wj;
-            }
-            return wC.call(this, wH, wl).then(function (wn) {
-              return new Promise(function (wq, wI) {
-                wP(wH, wn.headers.get(wV));
-                wK.fI(wn.status, wn.headers.get("Content-Type")) ? wn.clone().text().then(function (wZ) {
-                  wK.fz(wZ, function (wg) {
-                    "dySig" == wg ? fetch(wH, wl).then(function (wY) {
-                      if (200 <= wY.status && wY.status < 500) {
-                        wq(wY);
-                      }
-                    }).catch(function (wY) {}) : wK.fC({
-                      type: "fetch",
-                      which: wg,
-                      A2: wH,
-                      A3: wl,
-                      A4: function (wY) {
-                        wq(wY);
-                      }
-                    });
-                  }, wH) || wq(wn);
-                }).catch(function (wZ) {
-                  wq(wn);
-                }) : wq(wn);
-              });
-            }).catch(function (wn) {
-              return Promise.reject(wn);
-            });
-          };
-          AR.fo.fetch._waf_hook = true;
-        }
-      },
-      fI: function (wJ, wr) {
-        return 200 == wJ && wr && -1 < wr.indexOf("text/html");
-      },
-      A0: function (wJ, wr, wC, wH) {
-        var wj;
-        var wn;
-        var wk = this;
-        function wq(wI, wz, wZ) {
-          setTimeout(function () {
-            var wg;
-            var wX;
-            var wY;
-            AR.fP.getElementById("waf_nc_block") ? (AR.fP.getElementById("waf_nc_block").style.display = "block", wK.fr || (wK.fr = Am("body * {pointer-events:auto!important}")), AT().appendChild(wK.fr), wg = "访问验证", wX = "为保证您的正常访问,请进行如下验证", "en" == wr && (wX = "Please slide to verify that you're not a robot", wg = "Access Verification"), (wY = AR.fP.getElementsByClassName("waf-nc-title")) && (wY[0].innerText = wg), (wY = AR.fP.getElementsByClassName(AR.fo._waf_is_mobile ? "waf-nc-h5-description" : "waf-nc-description")) && (wY[0].innerText = wX), wz ? wZ() : wK.A5(wZ, wI)) : wq(wI);
-          }, 500);
-        }
-        wk.fH || (wk.fH = true, wK.A6(wC), 2 == wC ? (wj = {
-          userId: wH.userId,
-          userUserId: wH.userUserId,
-          SceneId: wH.sceneId,
-          mode: "embed",
-          element: "#nocaptcha",
-          slideStyle: {
-            width: AR.fo._waf_is_mobile ? AR.fo._waf_nc_width : 320,
-            height: AR.fo._waf_is_mobile ? AR.fo._waf_nc_width / 8 : 40
-          },
-          language: wr,
-          immediate: true,
-          success: function (wI) {
-            var wz = {
-              u_atoken: wH.token,
-              u_asig: wI,
-              u_aref: wH.refer
-            };
-            wk.fg(wz);
-          },
-          fail: function (wI) {},
-          getInstance: function (wI) {},
-          verifyType: "1.0",
-          region: wH.region,
-          UserCertifyId: wH.traceid
-        }, wq(wC, AR.fo.initAliyunCaptcha, function () {
-          initAliyunCaptcha(wj);
-        })) : (wn = {
-          renderTo: "#nocaptcha",
-          appkey: "CF_APP_WAF",
-          scene: "register",
-          trans: {
-            key1: "code100",
-            user: "default",
-            aysnc: "1"
-          },
-          token: wJ,
-          language: wr,
-          isEnabled: true,
-          times: 3,
-          success: function (wI) {
-            undefined === wI.token && (wI.token = wJ);
-            if (wH.fY) {
-              for (var wz = 0; wz < wH.fY.length; ++wz) {
-                delete AR.fo[wH.fY[wz]];
-              }
-            }
-            var wZ = {
-              u_atoken: wI.token,
-              u_asession: wI.sessionId,
-              u_asig: wI.sig
-            };
-            wk.fg(wZ);
-          },
-          fail: function (wI) {},
-          error: function (wI) {}
-        }, AR.fo._waf_is_mobile && (wn.scene = "register_h5", wn.width = AR.fo._waf_nc_width), wq(wC, AR.fo.AWSC && AR.fo.AWSC.use, function () {
-          AWSC.use("nc", function (wI, wz) {
-            AR.fo.nc = wz.init(wn);
-          });
-        })), AR.fP.getElementById("waf-nc-traceid") && (AR.fP.getElementById("waf-nc-traceid").innerHTML = ("cn" == wr ? "日志ID: " : "TraceID:") + AR.fo._waf_traceid));
-      },
-      fg: function (wJ) {
-        var wC = this;
-        if (wJ) {
-          var wH = AR.fP.getElementById("nocaptcha");
-          var wl = AR.fP.getElementById("waf_nc_block");
-          if (wl) {
-            wl.style.display = "none";
-          }
-          if (wH) {
-            wH.innerHTML = "";
-          }
-          wC.fH = false;
-          try {
-            wK.fr.remove();
-          } catch (wj) {}
+    try {
+      const _0x51e57c = await _0x1bffb2.post(_0x32d78b, _0x29bc27, {
+          "headers": _0x501026
+        }),
+        _0x3445a8 = _0x51e57c.data;
+      if (_0x3445a8 && _0x3445a8.response) {
+        const _0x66611e = _0x3445a8.response.balance || 0;
+        console.log("[app账号 " + _0x3b699c + "] 阅读任务第 " + (_0x331381 + 1) + " 次执行成功 当前余额: " + _0x66611e);
+        if (_0x66611e === _0x40074e) {
+          _0x1dd4b7++;
         } else {
-          wC.fl += 1;
+          _0x1dd4b7 = 0;
         }
-        !function wn(wk) {
-          var wq;
-          var wI;
-          var wz;
-          var wZ;
-          var wB;
-          var wg;
-          var wX;
-          if (0 != wk.length) {
-            wq = wk[0];
-            wk.splice(0, 1);
-            "xhr" === wq.type ? (wI = wq.fZ, wg = (wz = wq.fZ).openArgs, wZ = wz.sendBody, wB = wg[1], "captcha" === wq.which && ((wX = wC.fk(wB)).search = wC.A7(wX.search, wJ), wg[1] = wC.A8(wX), wI.fq = true), wK.fj(wz), wI.addEventListener("readystatechange", function (wY) {
-              if (4 === wI.readyState) {
-                wn(wk);
-              }
-            }), wK.fe.call(wI, wZ)) : "fetch" === wq.type && (wB = wq.A2, wg = wq.A3, "object" == wO(wB) && wB.url && wq.A9 ? wB = wq.A9 : "captcha" === wq.which && ((wX = wC.fk(wB)).search = wC.A7(wX.search, wJ), wB = wC.A8(wX)), fetch(wB, wg).then(function (wY) {
-              if (200 <= wY.status && wY.status < 500) {
-                wq.A4(wY);
-              }
-              wn(wk);
-            }).catch(function (wY) {}));
-          }
-        }(wJ ? this.fO : this.fK);
-      },
-      fk: AA.fb,
-      A8: AA.fW,
-      A7: AA.fx,
-      fX: function (wJ) {
-        var wr;
-        var wC;
-        return -1 == (wr = wJ.indexOf("id=\"traceid\"")) ? "" : (wr = wJ.indexOf(": ", wr), wC = wJ.indexOf("</div>", wr), wJ.substring(wr + 2, wC));
-      },
-      Af: function (wJ) {
-        var wC = AR.fo._waf_is_mobile ? (wl = "<div id=\"waf_nc_block\"style=\"display: none;\"><div class=\"waf-nc-h5-mask\"></div><div id=\"WAF_NC_WRAPPER\"class=\"waf-nc-h5-wrapper\"><p class=\"waf-nc-title\">访问验证</p><div class=\"waf-nc-h5-description\">为了您的操作安全，请完成以下验证</div><p id=\"waf-nc-traceid\" class=\"waf-nc-traceid-class\"></p><div id=\"nocaptcha\" data-nc-idx=\"1\"></div></div></div>", wC = function () {
-          try {
-            var wj;
-            var wn = AR.fP.getElementsByName("viewport");
-            return wn && 1 == wn.length && wn[0].content && -1 != wn[0].content.indexOf("initial-scale") ? (wn = wn[0].content.replace(/\s+/g, ""), 0 == (wj = parseFloat(wn.split("initial-scale=")[1].split(",")[0])) ? 1 : 1 / wj) : 1;
-          } catch (wk) {
-            return 1;
-          }
-        }(), AR.fo._waf_nc_width = 300 * wC, "#waf_nc_block * {pointer-events: auto;}#waf_nc_block{position:fixed;_position:absolute;width:100%;height:100%;top:0;bottom:0;left:0;z-index:2000000000;}#waf_nc_block .waf-nc-h5-mask{background:#000;opacity:.5;filter:alpha(opacity=50);width:100%;height:100%}#waf_nc_block #aliyunCaptcha-sliding-slider{background:#ff6a00!important;font-size:" + 16 * wC + "px!important}#waf_nc_block .waf-nc-h5-wrapper{min-height:" + 220 * wC + "px;width:94%;position:absolute;top:20%;left:50%;;margin-left:-47%;padding:5% 1%;background:#fff;border-radius:" + 9 * wC + "px;box-sizing:border-box}#waf_nc_block .waf-nc-title{margin-top:" + +wC + "px;font-size:" + 16 * wC + "px;font-weight:500;color:#1a1a1a;text-align:center}#waf_nc_block .waf-nc-h5-description{margin-top:" + 24 * wC + "px;font-size:" + 12 * wC + "px;color:#595959;text-align:center}#waf_nc_block .waf-nc-traceid-class{margin-top:" + 8 * wC + "px;font-size:" + 12 * wC + "px;color:#999;text-align:center}#waf_nc_block .nc_bg{background:#fff3ea!important}#waf_nc_block .btn_slide{background:#ff6a00!important;border:0!important;color:#fff!important;width:" + 48 * wC + "px!important;height:" + 48 * wC + "px!important;font-size:" + 30 * wC + "px;font-weight:900!important;line-height:" + 48 * wC + "px!important}#waf_nc_block .btn_ok{background:#ff6a00!important;border:0!important;color:#fff!important;width:" + 48 * wC + "px!important;height:" + 48 * wC + "px!important;font-size:" + 30 * wC + "px;font-weight:900!important;line-height:" + 48 * wC + "px!important}#waf_nc_block .nc_scale{background:rgba(241,241,242,1)!important;height:" + 48 * wC + "px!important}#waf_nc_block .nc-lang-cnt{height:" + 48 * wC + "px!important;margin-left:" + 10 * wC + "px!important;line-height:" + 48 * wC + "px!important;font-size:" + 14 * wC + "px!important}#waf_nc_block .nc_wrapper{margin-left: auto;  margin-right: auto;}#waf_nc_block .nc-container #nc_2_wrapper{height:70px}#waf_nc_block #aliyunCaptcha-sliding-text {font-size:" + 15 * wC + "px}!important") : (wl = "<div id=\"waf_nc_block\" style=\"display: none;\">\n    <div class=\"waf-nc-mask\"></div>\n    <div id=\"WAF_NC_WRAPPER\" class=\"waf-nc-wrapper\">\n        <p class=\"waf-nc-title\">访问验证</p>\n        <p class=\"waf-nc-description\">为保证您的正常访问，请进行如下验证。</p>\n        <p id=\"waf-nc-traceid\" class=\"waf-nc-traceid-class\"></p>\n        <div id=\"nocaptcha\"></div>\n    </div>\n</div>\n</div>", "#waf_nc_block * {pointer-events: auto;}\n#waf_nc_block{position:fixed;_position:absolute;width:100%;height:100%;top:0;bottom:0;left:0;z-index:2000000000;}\n#waf_nc_block #aliyunCaptcha-sliding-slider{background:#ff6a00!important}\n#waf_nc_block .aliyunCaptcha-show{margin-left: -24px;}\n#waf_nc_block .waf-nc-mask{background:#000;opacity:.5;filter:alpha(opacity=50);width:100%;height:100%}\n#waf_nc_block .waf-nc-wrapper{min-height:220px;width:348px;text-align:center;position:absolute;top:20%;left:50%;margin-left:-200px;margin-bottom:16px;background:#fff;box-shadow:0 0 10px 0 rgba(0,0,0,0.15)}\n#waf_nc_block .waf-nc-title{margin-top:28px;font-size:24px;font-weight:500;color:#181818;letter-spacing:1.71px;text-align:center}\n#waf_nc_block .waf-nc-description{margin-top:24px;margin-left:24px;font-size:14px;color:#666;text-align:left}\n#waf_nc_block .waf-nc-traceid-class{margin-top:8px;margin-left:24px;font-size:12px;color:#999;text-align:left}\n#nocaptcha{margin-left:24px;margin-top:14px}\n#waf_nc_block .nc_bg{background:#fff3ea!important}\n#waf_nc_block .btn_slide{background:#ff6a00!important;border:0!important;color:#fff!important;width:48px!important;height:48px!important;font-size:30px;font-weight:900!important;line-height:48px!important}\n#waf_nc_block .btn_ok{background:#ff6a00!important;border:0!important;color:#fff!important;width:48px!important;height:48px!important;font-size:30px;font-weight:900!important;line-height:48px!important}\n#waf_nc_block .nc_scale{background:rgba(241,241,242,1)!important;height:48px!important}#waf_nc_block .nc-lang-cnt{height:48px!important;margin-left:10px!important;line-height:48px!important;font-size:14px!important}\n#waf_nc_block .sm-pop-inner{position:relative!important}#waf_nc_block .nc-container #nc_2_wrapper{height:70px!important}");
-        var wH = AR.fP.createElement("div");
-        wH.innerHTML = wl;
-        var wl = Am(wC);
-        AR.fP.body.appendChild(wH.firstChild);
-        AT().appendChild(wl);
-      },
-      A6: function (wJ) {
-        AR.fP.getElementById("waf_nc_block") || wK.Af(wJ);
-      },
-      A5: function (wJ, wr) {
-        var wH = AR.fP.createElement("script");
-        var wl = new Date();
-        var wj = AR.fP.head || AR.fP.getElementsByTagName("head")[0];
-        var wl = wl.getFullYear() + (wl.getMonth() + 1) + wl.getDate() + wl.getHours();
-        2 == wr ? wH.src = "//o.alicdn.com/captcha-frontend/aliyunCaptcha/AliyunCaptcha.js?t=" + wl : wH.src = "//g.alicdn.com/AWSC/AWSC/awsc.js?t=" + wl;
-        if (wJ) {
-          "onload" in wH ? wH.onload = function () {
-            wJ();
-          } : wH.onreadystatechange = function () {
-            if (/loaded|complete/.test(wH.readyState)) {
-              wJ();
-            }
-          };
+        if (_0x1dd4b7 >= 3) {
+          console.log("[app账号 " + _0x3b699c + "] 积分连续三次没有变化");
+          break;
         }
-        wj.appendChild(wH);
+        _0x40074e = _0x66611e;
+      } else {
+        console.error("[app账号 " + _0x3b699c + "] 阅读任务 " + (_0x331381 + 1) + " 执行失败，未返回预期的响应数据");
       }
-    }).fn(), wK.A1(), Ax(function () {
-      AR.fo._waf_body_copy = AR.fP.body;
-    }));
-  }();
-}();
+      const _0x1abe4a = Math.floor(Math.random() * 51) + 250;
+      console.log("[app账号 " + _0x3b699c + "] 阅读任务 等待 " + _0x1abe4a + " 秒");
+      await new Promise(_0x448d6a => setTimeout(_0x448d6a, _0x1abe4a * 1000));
+    } catch (_0x4945c6) {
+      console.error("任务 " + (_0x331381 + 1) + " 请求失败:", _0x4945c6);
+      break;
+    }
+  }
+  const _0x146cb0 = await _0x53ac49(_0x9d5d45);
+  console.log("[app账号 " + _0x3b699c + "] 阅读任务完成 当前进度: " + _0x146cb0.progress + "/" + _0x146cb0.max);
+  _0x25019c += "app账号 " + _0x3b699c + " 阅读任务完成 当前进度: " + _0x146cb0.progress + "/" + _0x146cb0.max + "\n";
+  return _0x25019c;
+}
+const _0x19332e = "1.4";
+async function _0x6b4793() {
+  const _0x36d31f = "http://api.bingapi.email/version.txt",
+    _0x52f852 = {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0"
+    };
+  try {
+    const _0x58cbfb = await _0x1bffb2.get(_0x36d31f, {
+      "headers": _0x52f852
+    });
+    if (_0x58cbfb.status === 200) {
+      const _0x3e72e0 = _0x58cbfb.data,
+        _0x513f6c = _0x3e72e0.version,
+        _0x33ecc7 = _0x3e72e0.msg;
+      return _0x513f6c && _0x33ecc7 ? {
+        "version": _0x513f6c,
+        "msg": _0x33ecc7
+      } : (console.log("版本信息或消息未找到"), null);
+    } else return console.log("请求失败，状态码: " + _0x58cbfb.status), null;
+  } catch (_0x4950db) {
+    console.error("请求发生错误:", _0x4950db.message);
+    return null;
+  }
+}
+const _0x3d0264 = require("os");
+function _0x52d2c7() {
+  const _0x41beb6 = _0x3d0264.networkInterfaces();
+  for (const _0x56d14e in _0x41beb6) {
+    for (const _0x1bcbd7 of _0x41beb6[_0x56d14e]) {
+      if (_0x1bcbd7.mac && _0x1bcbd7.mac !== "00:00:00:00:00:00") return _0x1bcbd7.mac;
+    }
+  }
+  return null;
+}
+async function _0x5791a9(_0x18cc4b) {
+  const _0x596c78 = "http://api.bingapi.email/api/query",
+    _0x53348d = {
+      "originalText": _0x18cc4b
+    },
+    _0x19239a = {
+      "Content-Type": "application/json"
+    };
+  try {
+    const _0x43da63 = await _0x1bffb2.post(_0x596c78, _0x53348d, {
+        "headers": _0x19239a
+      }),
+      _0x358e5e = _0x43da63.data;
+    if (_0x358e5e.code === 200 && _0x358e5e.data && _0x358e5e.data.length > 0) {
+      const _0x39e970 = _0x358e5e.data[0];
+      console.log("卡密验证成功，卡密剩余使用次数:", _0x39e970.usage_count);
+      if (_0x39e970.usage_count <= 0) {
+        console.log("卡密使用次数不足，任务停止。");
+        return false;
+      }
+      let _0x1144ed = _0x358e5e.data[0].mac_address;
+      const _0x297de9 = _0x358e5e.data[0].md5_hash,
+        _0x5b428c = _0x52d2c7();
+      if (!_0x5b428c) return console.log("无法获取本地 MAC 地址，任务停止。"), false;
+      console.log("当前MAC地址:", _0x5b428c);
+      if (_0x1144ed) return _0x1144ed === _0x5b428c ? true : (console.log("当前设备不匹配，任务停止。"), false);else {
+        {
+          const _0x2f36c8 = "http://api.bingapi.email/api/updateHash",
+            _0x3c10fa = {
+              "md5_hash": _0x297de9,
+              "mac_address": _0x5b428c
+            },
+            _0x56a5f6 = await _0x1bffb2.post(_0x2f36c8, _0x3c10fa, {
+              "headers": {
+                "Content-Type": "application/json"
+              }
+            }),
+            _0x2ddd2d = _0x56a5f6.data;
+          if (_0x2ddd2d.code === 200) {
+            console.log("第一次运行，开始绑定设备");
+            return true;
+          } else return console.log("设备绑定失败:"), false;
+        }
+      }
+    } else return console.log("卡密无效或未找到相关数据."), false;
+  } catch (_0x42857f) {
+    console.error("卡密验证请求失败:");
+    return false;
+  }
+}
+async function _0x3a3cef(_0x25c684) {
+  const _0x449d98 = new Date(),
+    _0x3351d6 = _0x449d98.getFullYear(),
+    _0x40021b = String(_0x449d98.getMonth() + 1).padStart(2, "0"),
+    _0x1ecf04 = String(_0x449d98.getDate()).padStart(2, "0"),
+    _0x1d92aa = String(_0x449d98.getHours()).padStart(2, "0"),
+    _0x3713bf = String(_0x449d98.getMinutes()).padStart(2, "0"),
+    _0x5089d5 = _0x3351d6 + "/" + _0x40021b + "/" + _0x1ecf04 + " " + _0x1d92aa + ":" + _0x3713bf,
+    _0x25973a = "https://api.bingapi.email/api/endpoint",
+    _0x400414 = {
+      "md5_hash": _0x25c684,
+      "last_run_time": _0x5089d5
+    },
+    _0x135eb3 = {
+      "Content-Type": "application/json"
+    };
+  try {
+    const _0x2852dd = await _0x1bffb2.post(_0x25973a, _0x400414, {
+        "headers": _0x135eb3
+      }),
+      _0x3d9d58 = _0x2852dd.data;
+    if (_0x3d9d58.message === "操作成功") console.log("开始执行，卡密剩余使用次数:", _0x3d9d58.new_usage_count);else {
+      console.log("更新失败:", _0x3d9d58.message);
+      throw new Error("更新数据失败，任务停止");
+    }
+  } catch (_0x1d28ff) {
+    {
+      console.error("请求失败:", _0x1d28ff.message || _0x1d28ff);
+      throw new Error("更新数据失败，任务停止");
+    }
+  }
+}
+async function _0x4a0950() {
+  let _0x3c3256 = "";
+  const _0xd6ed11 = await _0x6b4793();
+  console.log("当前版本" + _0x19332e);
+  console.log("最新公告: " + _0xd6ed11.msg);
+  if (!_0xd6ed11) {
+    {
+      console.log("未找到版本信息，任务停止。");
+      return;
+    }
+  }
+  if (_0xd6ed11.version !== _0x19332e) {
+    console.log("版本不匹配云端版本" + _0xd6ed11.version);
+    return;
+  } else console.log("版本匹配,开始任务");
+  const _0x273d10 = process.env.bingkm;
+  if (!_0x273d10) {
+    console.log("未找到卡密，任务停止。");
+    return;
+  }
+  const _0x109a31 = await _0x5791a9(_0x273d10);
+  if (!_0x109a31) {
+    console.log("卡密无效，任务停止。");
+    return;
+  }
+  try {
+    await _0x3a3cef(_0x273d10);
+  } catch (_0x416342) {
+    {
+      console.log(_0x416342.message);
+      return;
+    }
+  }
+  let _0x7b07ad = await _0x9d95a(),
+    _0x49064a = _0x7b07ad.map(_0x4d136c => _0x4d136c.access_token).filter(_0x5ab10e => _0x5ab10e);
+  console.log("开始web搜索任务...");
+  await Promise.all(_0x4f1cfa.map((_0x27dfaf, _0x4a2063) => _0x3b2416(_0x4a2063 + 1, _0x27dfaf, _0x2319e5, _0x1f8978, _0xdbce7a)));
+  console.log("开始web每日任务...");
+  const _0x2101a5 = await Promise.all(_0x4f1cfa.map((_0x3fb155, _0x3a9206) => _0x2c1423(_0x3a9206 + 1, _0x3fb155, _0x839be8)));
+  if (_0x49064a.length === 0) console.log("没有有效的访问令牌，跳过签到和阅读任务..."), _0x3c3256 = _0xd6ed11.msg + "\n" + "——————web任务——————\n" + _0x2101a5.join("");else {
+    console.log("开始app阅读任务...");
+    const _0x423448 = await Promise.all(_0x49064a.map((_0x231254, _0x4623bb) => _0x257cb8(_0x4623bb + 1, _0x231254)));
+    console.log("开始app签到任务...");
+    const _0x155b3b = await Promise.all(_0x49064a.map((_0x296793, _0x438ad6) => _0x3a69a9(_0x438ad6 + 1, _0x296793)));
+    _0x3c3256 = _0xd6ed11.msg + "\n" + "——————web任务——————\n" + _0x2101a5.join("") + "——————app任务——————\n" + _0x155b3b.join("") + _0x423448.join("");
+  }
+  console.log("————————————账号统计————————————");
+  console.log(_0x3c3256);
+  process.env.bingPush === "true" && QLAPI.notify("bing脚本推送", _0x3c3256);
+}
+_0x4a0950().catch(_0x5a3d92 => console.error("执行出错:", _0x5a3d92));
