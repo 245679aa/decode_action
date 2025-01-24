@@ -1,818 +1,118 @@
-//Fri Jan 24 2025 12:13:30 GMT+0000 (Coordinated Universal Time)
-//Base:https://github.com/echo094/decode-js
-//Modify:https://github.com/smallfawn/decode_action
-const _0x18f76b = require("fs"),
-  _0x29142b = require("js-yaml"),
-  _0x1bffb2 = require("axios");
-async function _0x9d95a() {
-  try {
-    {
-      const _0x54476c = "./bing.yaml",
-        _0x4b19a7 = _0x18f76b.readFileSync(_0x54476c, "utf8"),
-        _0x21564e = _0x29142b.load(_0x4b19a7),
-        _0x3eb46b = _0x21564e?.["accounts"] || [];
-      if (_0x3eb46b.length === 0) return console.log("未找到有效的app账号数据，跳过处理"), [];
-      const _0x3dad3b = [];
-      for (let _0x19b30c = 0; _0x19b30c < _0x3eb46b.length; _0x19b30c++) {
-        const _0x2dbeea = _0x3eb46b[_0x19b30c],
-          _0x3c552e = _0x2dbeea.code?.["match"](/(?:[?&])code=([A-Za-z0-9._%-]+)/);
-        if (!_0x3c552e) {
-          console.error("第 " + (_0x19b30c + 1) + " 号app账号没有有效的 code 参数，跳过");
-          continue;
-        }
-        const _0x1e8104 = _0x3c552e[1];
-        if (!_0x2dbeea.refresh_token) {
-          {
-            console.log("开始登录第 " + (_0x19b30c + 1) + " 号app账号");
-            try {
-              const _0x47c407 = await _0x272fbd(_0x1e8104);
-              _0x2dbeea.refresh_token = _0x47c407;
-              console.log("第 " + (_0x19b30c + 1) + " 号app账号获取到新的刷新令牌");
-            } catch (_0x596068) {
-              {
-                console.error("第 " + (_0x19b30c + 1) + " 号app账号获取刷新令牌失败: " + _0x596068);
-                continue;
-              }
-            }
-          }
-        }
-        if (_0x2dbeea.refresh_token) {
-          try {
-            {
-              const {
-                access_token: _0x46d0a9,
-                refresh_token: _0x58cf98
-              } = await _0x56e71a(_0x2dbeea.refresh_token);
-              _0x2dbeea.access_token = _0x46d0a9;
-              _0x58cf98 && (_0x2dbeea.refresh_token = _0x58cf98);
-              console.log("第 " + (_0x19b30c + 1) + " 号app账号获取到登录令牌");
-            }
-          } catch (_0x53bc54) {
-            {
-              console.error("第 " + (_0x19b30c + 1) + " 号app账号获取登录令牌失败: " + _0x53bc54);
-              continue;
-            }
-          }
-        }
-        _0x2dbeea.access_token && _0x3dad3b.push(_0x2dbeea);
-      }
-      console.log("有效app账号数：", _0x3dad3b.length);
-      if (_0x3dad3b.length > 0) await _0x32ed67(_0x54476c, _0x3dad3b), console.log("YAML 文件已更新");else {
-        console.log("没有有效app账号，跳过 YAML 文件更新");
-      }
-      return _0x3dad3b;
-    }
-  } catch (_0x2b2681) {
-    console.error("读取或解析 bing.yaml 文件失败:", _0x2b2681);
-    throw _0x2b2681;
-  }
-}
-async function _0x272fbd(_0x538039) {
-  const _0x4734e6 = "https://login.live.com/oauth20_token.srf?client_id=0000000040170455&code=" + _0x538039 + "&redirect_uri=https://login.live.com/oauth20_desktop.srf&grant_type=authorization_code";
-  try {
-    const _0x41902b = await _0x1bffb2.get(_0x4734e6);
-    return _0x41902b.data.refresh_token;
-  } catch (_0x20b631) {
-    console.error("获取 刷新令牌 失败: " + _0x20b631);
-    throw _0x20b631;
-  }
-}
-async function _0x56e71a(_0x5ca440) {
-  const _0x2197d9 = "https://login.live.com/oauth20_token.srf?client_id=0000000040170455&refresh_token=" + _0x5ca440 + "&scope=service::prod.rewardsplatform.microsoft.com::MBI_SSL&grant_type=REFRESH_TOKEN";
-  try {
-    {
-      const _0x5bfaec = await _0x1bffb2.get(_0x2197d9);
-      return {
-        "access_token": _0x5bfaec.data.access_token,
-        "refresh_token": _0x5bfaec.data.refresh_token || _0x5ca440
-      };
-    }
-  } catch (_0x345e21) {
-    {
-      console.error("获取 登录令牌 失败: " + _0x345e21);
-      throw _0x345e21;
-    }
-  }
-}
-async function _0x32ed67(_0x519d71, _0x30c449) {
-  try {
-    const _0x2e02bb = {
-        "accounts": _0x30c449
-      },
-      _0x4e5900 = _0x29142b.dump(_0x2e02bb, {
-        "lineWidth": 1000000
-      });
-    _0x18f76b.writeFileSync(_0x519d71, _0x4e5900, "utf8");
-  } catch (_0x1899ef) {
-    {
-      console.error("更新 bing.yaml 文件失败:", _0x1899ef);
-      throw _0x1899ef;
-    }
-  }
-}
-const _0x4f1cfa = process.env.BING_CK ? process.env.BING_CK.split("\n").map(_0x166b14 => _0x166b14.trim()).filter(_0x1f1412 => _0x1f1412) : [];
-if (_0x4f1cfa.length === 0) throw new Error("未检测到任何账号，请在环境变量中设置 BING_CK");
-console.log("web账号数：", _0x4f1cfa.length);
-const _0x56c103 = process.env.PC_USER_AGENT,
-  _0xef84f9 = process.env.MOBILE_USER_AGENT;
-if (!_0x56c103 || !_0xef84f9) throw new Error("请在环境变量中设置 PC_USER_AGENT 和 MOBILE_USER_AGENT");
-function _0x1534a6(_0x3a0447) {
-  const _0x4566ba = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let _0x277fb4 = "";
-  for (let _0x49e071 = 0; _0x49e071 < _0x3a0447; _0x49e071++) {
-    _0x277fb4 += _0x4566ba.charAt(Math.floor(Math.random() * _0x4566ba.length));
-  }
-  return _0x277fb4;
-}
-async function _0x2319e5() {
-  const _0x43d774 = ["BaiduHot", "ToutiaoHot", "DouYinHot", "ZhihuHot", "BiliBliHot", "WeiBoHot", "SoGouHot", "BaiduTieBaHot", "SoHot"],
-    _0x529bee = process.env.apikey;
-  let _0x3b77f9 = [];
-  _0x605981(_0x43d774);
-  while (_0x3b77f9.length === 0) {
-    for (const _0x10c2a3 of _0x43d774) {
-      try {
-        {
-          let _0x36c4a9 = "https://api.gumengya.com/Api/" + _0x10c2a3;
-          _0x529bee && (_0x36c4a9 += "&appkey=" + _0x529bee);
-          const _0x5309ca = await _0x1bffb2.get(_0x36c4a9);
-          _0x5309ca.data && _0x5309ca.data.data && (_0x3b77f9 = _0x3b77f9.concat(_0x5309ca.data.data.map(_0x8674b3 => _0x8674b3.title)));
-        }
-      } catch (_0x410906) {
-        console.warn("请求失败: " + _0x10c2a3 + ", 错误: " + _0x410906);
-      }
-    }
-    _0x3b77f9.length === 0 && (console.warn("未能获取到关键词，重试中..."), await new Promise(_0x3fad33 => setTimeout(_0x3fad33, 3000)));
-  }
-  const _0x3c4db9 = [...new Set(_0x3b77f9)];
-  return _0x3c4db9;
-}
-function _0x605981(_0x3b0a2e) {
-  for (let _0x4b76f6 = _0x3b0a2e.length - 1; _0x4b76f6 > 0; _0x4b76f6--) {
-    const _0xe7e7bd = Math.floor(Math.random() * (_0x4b76f6 + 1));
-    [_0x3b0a2e[_0x4b76f6], _0x3b0a2e[_0xe7e7bd]] = [_0x3b0a2e[_0xe7e7bd], _0x3b0a2e[_0x4b76f6]];
-  }
-}
-async function _0xdbce7a(_0x20d543, _0x2dee02, _0x522afa, _0x35d8c3) {
-  const _0x1209b6 = "https://cn.bing.com/search",
-    _0x3100ec = {
-      "q": _0x20d543,
-      "qs": "n",
-      "form": _0x1534a6(4),
-      "sp": "-1",
-      "lq": "0",
-      "pq": _0x20d543,
-      "sc": "9-16",
-      "sk": "",
-      "cvid": _0x1534a6(32),
-      "ghsh": "0",
-      "ghacc": "0",
-      "ghpl": ""
-    },
-    _0x166d06 = {
-      "User-Agent": _0x2dee02,
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-      "priority": "u=0, i",
-      "Cookie": _0x522afa
-    };
-  try {
-    const _0xfc2c7f = await _0x1bffb2.get(_0x1209b6, {
-      "params": _0x3100ec,
-      "headers": _0x166d06
-    });
-  } catch (_0x44a50a) {
-    console.error("[账号 " + _0x35d8c3 + "] 搜索请求失败: " + _0x44a50a);
-  }
-}
-async function _0x1f8978(_0x4dbadf, _0x1b191b) {
-  const _0x53533e = "https://cn.bing.com/rewardsapp/reportActivity",
-    _0x37e718 = {
-      "Cookie": _0x4dbadf,
-      "User-Agent": _0x56c103
-    };
-  try {
-    {
-      const _0x5773c5 = await _0x1bffb2.get(_0x53533e, {
-          "headers": _0x37e718
-        }),
-        _0x5ef413 = _0x5773c5.data.match(/"RewardsBalance":(\d+)/);
-      return _0x5ef413 ? parseInt(_0x5ef413[1], 10) : (console.warn("[账号 " + _0x1b191b + "] 未找到积分信息"), null);
-    }
-  } catch (_0x14f4c3) {
-    console.error("[账号 " + _0x1b191b + "] 获取积分失败: " + _0x14f4c3);
-    return null;
-  }
-}
-const _0x5035a7 = require("cheerio");
-async function _0x839be8(_0x1b2182) {
-  const _0x59baab = "https://rewards.bing.com",
-    _0x20231e = {
-      "ref": "rewardspanel"
-    },
-    _0x173fdb = {
-      "User-Agent": _0x56c103,
-      "Cookie": _0x1b2182
-    };
-  try {
-    {
-      const _0x397859 = await _0x1bffb2.get(_0x59baab, {
-          "params": _0x20231e,
-          "headers": _0x173fdb
-        }),
-        _0x103bdc = _0x5035a7.load(_0x397859.data),
-        _0x5954ba = _0x103bdc("input[name=\"__RequestVerificationToken\"]");
-      if (_0x5954ba.length > 0) {
-        return _0x5954ba.val();
-      } else return console.error("__RequestVerificationToken not found."), null;
-    }
-  } catch (_0x2db5e3) {
-    console.error("获取 Token 失败: " + _0x2db5e3);
-    return null;
-  }
-}
-async function _0x4f7d82(_0x25e43d, _0x176516, _0xc75875, _0x46860d) {
-  console.log("开始执行任务 " + _0x25e43d);
-  const _0x5b3d67 = "https://rewards.bing.com/api/reportactivity",
-    _0x4ecccc = {
-      "X-Requested-With": "XMLHttpRequest"
-    },
-    _0x21e1c4 = new URLSearchParams({
-      "id": _0x25e43d,
-      "hash": _0x176516,
-      "__RequestVerificationToken": _0x46860d
-    }).toString(),
-    _0x67cff = {
-      "User-Agent": _0x56c103,
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Referer": "https://rewards.bing.com/",
-      "Cookie": _0xc75875
-    };
-  try {
-    const _0x560699 = await _0x1bffb2.post(_0x5b3d67, _0x21e1c4, {
-      "params": _0x4ecccc,
-      "headers": _0x67cff
-    });
-    if (_0x560699.status !== 200) {
-      {
-        console.error("请求失败，HTTP 状态码: " + _0x560699.status);
-        return;
-      }
-    }
-    const _0x3dfb76 = _0x560699.data,
-      _0x5408d3 = _0x3dfb76.balance || null;
-    if (_0x5408d3 !== null) return console.log("当前积分：" + _0x5408d3), true;else {
-      console.warn("未能从响应中获取积分信息");
-    }
-  } catch (_0x3352c8) {
-    console.error("请求失败: " + _0x3352c8);
-  }
-}
-async function _0x948deb(_0x36cec8) {
-  const _0x29ed40 = "https://rewards.bing.com/api/getuserinfo",
-    _0x3acfba = {
-      "type": "1",
-      "X-Requested-With": "XMLHttpRequest",
-      "_": Date.now()
-    },
-    _0x3b4767 = {
-      "User-Agent": _0x56c103,
-      "Cookie": _0x36cec8
-    };
-  try {
-    {
-      const _0x59aef3 = await _0x1bffb2.get(_0x29ed40, {
-        "params": _0x3acfba,
-        "headers": _0x3b4767
-      });
-      return _0x59aef3.data;
-    }
-  } catch (_0x3c05b1) {
-    console.error("获取搜索任务进度失败，错误: " + _0x3c05b1);
-    return null;
-  }
-}
-async function _0x2c1423(_0x671042, _0x37eac8, _0x55e397) {
-  console.log("开始处理账号 " + _0x671042);
-  let _0x24c76a = "",
-    _0x33d0b1;
-  try {
-    _0x33d0b1 = await _0x55e397(_0x37eac8);
-    if (!_0x33d0b1) {
-      {
-        console.warn("跳过当前账号 " + _0x671042 + " 任务，因为账号失效。");
-        _0x24c76a += "账号 " + _0x671042 + " 失效\n";
-        QLAPI.notify("账号失效", "当前账号 " + _0x671042 + "失效。");
-        return;
-      }
-    }
-  } catch (_0x5d8bc6) {
-    {
-      console.error("账号 " + _0x671042 + " 获取 token 失败，错误: " + _0x5d8bc6);
-      return;
-    }
-  }
-  const _0x47a7cf = "https://rewards.bing.com/api/getuserinfo",
-    _0x5b70ac = {
-      "type": "1",
-      "X-Requested-With": "XMLHttpRequest",
-      "_": Date.now()
-    },
-    _0x37e0ec = {
-      "User-Agent": _0x56c103,
-      "Cookie": _0x37eac8
-    };
-  let _0x17e973;
-  try {
-    const _0x516b7c = await _0x1bffb2.get(_0x47a7cf, {
-      "params": _0x5b70ac,
-      "headers": _0x37e0ec
-    });
-    _0x17e973 = _0x516b7c.data;
-  } catch (_0xdbff17) {
-    console.error("账号 " + _0x671042 + " 获取每日任务失败，错误: " + _0xdbff17);
-    return;
-  }
-  const _0x37794a = new Date().toLocaleDateString("en-US", {
-    "month": "2-digit",
-    "day": "2-digit",
-    "year": "numeric"
-  });
-  let _0x267be3 = 0,
-    _0x2c7f69 = 0;
-  const _0x1b0b7f = _0x17e973.dashboard.dailySetPromotions[_0x37794a] || [];
-  for (const _0x598cff of _0x1b0b7f) {
-    {
-      _0x2c7f69++;
-      const {
-        offerId: _0x4dac3d,
-        title: _0x4a0e5e,
-        hash: _0x16fb49,
-        complete: _0x46896d,
-        pointProgressMax: _0xa43e51,
-        attributes: _0x1af16f
-      } = _0x598cff;
-      console.log("------------------------");
-      console.log("每日任务");
-      console.log("[账号 " + _0x671042 + "]");
-      console.log("Name: " + _0x4dac3d);
-      console.log("题目: " + _0x4a0e5e);
-      console.log("Hash: " + _0x16fb49);
-      console.log("是否完成: " + _0x46896d);
-      console.log("奖励积分: " + _0xa43e51);
-      if (_0x1af16f?.["is_unlocked"] === "False") console.log("任务未解锁");else {
-        if (!_0x46896d) {
-          try {
-            {
-              const _0x1f79c1 = await _0x4f7d82(_0x4dac3d, _0x16fb49, _0x37eac8, _0x33d0b1);
-              _0x1f79c1 && _0x267be3++;
-            }
-          } catch (_0x36b2ec) {
-            {
-              console.error("账号 " + _0x671042 + " 执行任务失败，错误: " + _0x36b2ec);
-              continue;
-            }
-          }
-        } else _0x267be3++, console.log("任务已完成");
-      }
-      const _0x1b98d8 = Math.floor(Math.random() * 51) + 250;
-      console.log("[账号 " + _0x671042 + "] 等待 " + _0x1b98d8 + " 秒");
-      await new Promise(_0x186e2f => setTimeout(_0x186e2f, _0x1b98d8 * 1000));
-    }
-  }
-  let _0x57951d = 0,
-    _0x26ea20 = 0;
-  for (const _0x286585 of _0x17e973.dashboard.morePromotions) {
-    if (_0x286585.pointProgressMax === 0) continue;
-    _0x26ea20++;
-    const {
-      offerId: _0x484564,
-      title: _0x2749ad,
-      hash: _0xccc28f,
-      complete: _0x34b3d7,
-      pointProgressMax: _0x1a1a2c,
-      attributes: _0x3dda40
-    } = _0x286585;
-    console.log("------------------------");
-    console.log("更多任务");
-    console.log("[账号 " + _0x671042 + "]");
-    console.log("Name: " + _0x484564);
-    console.log("题目: " + _0x2749ad);
-    console.log("Hash: " + _0xccc28f);
-    console.log("是否完成: " + _0x34b3d7);
-    console.log("奖励积分: " + _0x1a1a2c);
-    if (_0x3dda40?.["is_unlocked"] === "False") console.log("任务未解锁");else {
-      if (!_0x34b3d7) {
-        try {
-          const _0x278cf9 = await _0x4f7d82(_0x484564, _0xccc28f, _0x37eac8, _0x33d0b1);
-          _0x278cf9 && _0x57951d++;
-        } catch (_0x304e42) {
-          console.error("账号 " + _0x671042 + " 执行任务失败，错误: " + _0x304e42);
-          continue;
-        }
-      } else _0x57951d++, console.log("任务已完成");
-    }
-    const _0x3225d4 = Math.floor(Math.random() * 51) + 250;
-    console.log("[账号 " + _0x671042 + "] 等待 " + _0x3225d4 + " 秒");
-    await new Promise(_0x3eacc6 => setTimeout(_0x3eacc6, _0x3225d4 * 1000));
-  }
-  const _0x457786 = await _0x948deb(_0x37eac8);
-  if (_0x457786) {
-    {
-      const _0xa7dbe5 = _0x457786.dashboard.userStatus.counters,
-        _0x4bfcfc = _0xa7dbe5.pcSearch ? _0xa7dbe5.pcSearch[0].pointProgress : 0,
-        _0x187f65 = _0xa7dbe5.pcSearch ? _0xa7dbe5.pcSearch[0].pointProgressMax : 0,
-        _0x40a592 = _0xa7dbe5.mobileSearch ? _0xa7dbe5.mobileSearch[0].pointProgress : 0,
-        _0x3cbf98 = _0xa7dbe5.mobileSearch ? _0xa7dbe5.mobileSearch[0].pointProgressMax : 0;
-      _0x24c76a += "账号 " + _0x671042 + " PC 搜索任务进度: " + _0x4bfcfc + "/" + _0x187f65 + "\n";
-      _0x24c76a += "账号 " + _0x671042 + " 移动搜索任务进度: " + _0x40a592 + "/" + _0x3cbf98 + "\n";
-    }
-  }
-  _0x24c76a += "账号 " + _0x671042 + " 完成每日任务 " + _0x267be3 + "/" + _0x2c7f69 + " 个\n";
-  _0x24c76a += "账号 " + _0x671042 + " 完成临时任务 " + _0x57951d + "/" + _0x26ea20 + " 个\n";
-  const _0x1aafed = await _0x1f8978(_0x37eac8, _0x671042);
-  _0x24c76a += "账号 " + _0x671042 + " 剩余积分 " + _0x1aafed + "\n";
-  return _0x24c76a;
-}
-async function _0x3b2416(_0x2cc18d, _0x504291, _0x434bad, _0x15f861, _0x28fd28) {
-  const _0x4076e3 = Math.random() * 99000 + 1000;
-  await new Promise(_0x53a246 => setTimeout(_0x53a246, _0x4076e3));
-  const _0xd7589b = await _0x434bad();
-  console.log("[账号 " + _0x2cc18d + "] 开始处理...");
-  const _0x2534a8 = new Set();
-  let _0x2dc4ba = await _0x15f861(_0x504291, _0x2cc18d);
-  if (_0x2dc4ba === null) {
-    console.error("[账号 " + _0x2cc18d + "] 无法获取初始积分，跳过此账号");
-    return;
-  }
-  console.log("[账号 " + _0x2cc18d + "] 初始积分: " + _0x2dc4ba);
-  let _0x2bf380 = 0;
-  const _0x5e4d67 = 5;
-  while (true) {
-    const _0x223b08 = _0xd7589b.filter(_0x470a81 => !_0x2534a8.has(_0x470a81));
-    if (_0x223b08.length === 0) {
-      console.log("[账号 " + _0x2cc18d + "] 所有关键词已用完");
-      break;
-    }
-    searchType = "PC设备";
-    userAgent = _0x56c103;
-    const _0x48f39b = _0x223b08[Math.floor(Math.random() * _0x223b08.length)];
-    _0x2534a8.add(_0x48f39b);
-    console.log("[账号 " + _0x2cc18d + "] 执行 " + searchType + " 搜索: " + _0x48f39b);
-    await _0x28fd28(_0x48f39b, userAgent, _0x504291, _0x2cc18d);
-    const _0x3b2271 = await _0x15f861(_0x504291, _0x2cc18d);
-    if (_0x3b2271 === null) {
-      {
-        console.error("[账号 " + _0x2cc18d + "] 无法获取当前积分，跳过此账号");
-        break;
-      }
-    }
-    _0x3b2271 > _0x2dc4ba ? (console.log("[账号 " + _0x2cc18d + "] " + searchType + " 积分增加，继续使用"), _0x2dc4ba = _0x3b2271, _0x2bf380 = 0) : (_0x2bf380++, console.log("[账号 " + _0x2cc18d + "] " + searchType + " 未增加积分，尝试次数: " + _0x2bf380));
-    if (_0x2bf380 >= _0x5e4d67) {
-      console.log("[账号 " + _0x2cc18d + "] " + searchType + " 多次未增加积分，结束任务");
-      const _0x523d31 = Math.floor(Math.random() * 51) + 200;
-      console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x523d31 + " 秒");
-      await new Promise(_0x42a7a1 => setTimeout(_0x42a7a1, _0x523d31 * 1000));
-      break;
-    }
-    const _0x466c2d = Math.floor(Math.random() * 51) + 200;
-    console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x466c2d + " 秒");
-    await new Promise(_0x3f2869 => setTimeout(_0x3f2869, _0x466c2d * 1000));
-  }
-  _0x2bf380 = 0;
-  while (true) {
-    const _0x5151af = _0xd7589b.filter(_0x38d92c => !_0x2534a8.has(_0x38d92c));
-    if (_0x5151af.length === 0) {
-      console.log("[账号 " + _0x2cc18d + "] 所有关键词已用完");
-      break;
-    }
-    searchType = "手机设备";
-    userAgent = _0xef84f9;
-    const _0x34fdcb = _0x5151af[Math.floor(Math.random() * _0x5151af.length)];
-    _0x2534a8.add(_0x34fdcb);
-    console.log("[账号 " + _0x2cc18d + "] 执行 " + searchType + " 搜索: " + _0x34fdcb);
-    await _0x28fd28(_0x34fdcb, userAgent, _0x504291, _0x2cc18d);
-    const _0x5d32a0 = await _0x15f861(_0x504291, _0x2cc18d);
-    if (_0x5d32a0 === null) {
-      {
-        console.error("[账号 " + _0x2cc18d + "] 无法获取当前积分，跳过此账号");
-        break;
-      }
-    }
-    _0x5d32a0 > _0x2dc4ba ? (console.log("[账号 " + _0x2cc18d + "] " + searchType + " 积分增加，继续使用"), _0x2dc4ba = _0x5d32a0, _0x2bf380 = 0) : (_0x2bf380++, console.log("[账号 " + _0x2cc18d + "] " + searchType + " 未增加积分，尝试次数: " + _0x2bf380));
-    if (_0x2bf380 >= _0x5e4d67) {
-      console.log("[账号 " + _0x2cc18d + "] " + searchType + " 多次未增加积分，结束任务");
-      break;
-    }
-    const _0x2a4952 = Math.floor(Math.random() * 51) + 200;
-    console.log("[账号 " + _0x2cc18d + "] 等待 " + _0x2a4952 + " 秒");
-    await new Promise(_0x18c059 => setTimeout(_0x18c059, _0x2a4952 * 1000));
-  }
-}
-const _0x3a69a9 = async (_0x34c1a5, _0x59bf07) => {
-    let _0x394998 = "";
-    const _0xc68620 = "https://prod.rewardsplatform.microsoft.com/dapi/me/activities",
-      _0x3da117 = new Date().toISOString().split("T")[0],
-      _0x17953b = {
-        "amount": 1,
-        "attributes": {
-          "offerid": "Gamification_Sapphire_DailyCheckIn",
-          "date": _0x3da117,
-          "signIn": false,
-          "timezoneOffset": "08:00:00"
-        },
-        "id": "",
-        "type": 101,
-        "country": "cn",
-        "risk_context": {},
-        "channel": "SAAndroid"
-      },
-      _0x7b0773 = {
-        "Content-Type": "application/json",
-        "User-Agent": _0xef84f9,
-        "authorization": "Bearer " + _0x59bf07
-      };
-    try {
-      const _0x52a9d3 = await _0x1bffb2.post(_0xc68620, _0x17953b, {
-          "headers": _0x7b0773
-        }),
-        _0x2afe39 = _0x52a9d3.data;
-      if (_0x2afe39.response && _0x2afe39.response.balance !== undefined) {
-        const _0x17e97b = _0x2afe39.response.balance;
-        console.log("app账号 " + _0x34c1a5 + " 签到成功 当前余额: " + _0x17e97b);
-        _0x394998 += "app账号 " + _0x34c1a5 + " 签到成功 当前余额: " + _0x17e97b + "\n";
-        return _0x394998;
-      } else console.log("无法获取余额");
-    } catch (_0x2eadb1) {
-      console.error("签到失败: ", _0x2eadb1);
-    }
-  },
-  _0x34656c = require("crypto");
-function _0xfcf8c6() {
-  const _0x185ce0 = _0x34656c.randomBytes(64);
-  return _0x185ce0.toString("hex");
-}
-async function _0x53ac49(_0x59aac0) {
-  const _0x276f9f = "https://prod.rewardsplatform.microsoft.com/dapi/me",
-    _0x201f50 = new URLSearchParams({
-      "channel": "SAAndroid",
-      "options": "613"
-    }),
-    _0x28eb48 = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + _0x59aac0
-    };
-  try {
-    const _0x4bd2f7 = await _0x1bffb2.get(_0x276f9f, {
-        "params": _0x201f50,
-        "headers": _0x28eb48
-      }),
-      _0x32d9d4 = _0x4bd2f7.data,
-      _0x31f998 = _0x32d9d4.response.promotions;
-    let _0x5e23a3 = {
-      "max": 1,
-      "progress": 0
-    };
-    if (_0x31f998) {
-      for (const _0x137e82 of _0x31f998) {
-        if (_0x137e82.attributes.offerid === "ENUS_readarticle3_30points") {
-          {
-            _0x5e23a3 = {
-              "max": Number(_0x137e82.attributes.max),
-              "progress": Number(_0x137e82.attributes.progress)
-            };
-            break;
-          }
-        }
-      }
-    }
-    return _0x5e23a3;
-  } catch (_0x5420b8) {
-    console.error("请求失败:", _0x5420b8);
-    return {
-      "max": 1,
-      "progress": 0
-    };
-  }
-}
-async function _0x257cb8(_0x3b699c, _0x9d5d45) {
-  let _0x25019c = "";
-  const _0x32d78b = "https://prod.rewardsplatform.microsoft.com/dapi/me/activities";
-  let _0x40074e = 0,
-    _0x1dd4b7 = 0;
-  const _0x501026 = {
-    "Content-Type": "application/json",
-    "User-Agent": _0xef84f9,
-    "authorization": "Bearer " + _0x9d5d45
-  };
-  for (let _0x331381 = 0; _0x331381 < 15; _0x331381++) {
-    const _0x29bc27 = {
-      "amount": 1,
-      "country": "cn",
-      "id": _0xfcf8c6(),
-      "type": 101,
-      "attributes": {
-        "offerid": "ENUS_readarticle3_30points"
-      }
-    };
-    try {
-      const _0x51e57c = await _0x1bffb2.post(_0x32d78b, _0x29bc27, {
-          "headers": _0x501026
-        }),
-        _0x3445a8 = _0x51e57c.data;
-      if (_0x3445a8 && _0x3445a8.response) {
-        const _0x66611e = _0x3445a8.response.balance || 0;
-        console.log("[app账号 " + _0x3b699c + "] 阅读任务第 " + (_0x331381 + 1) + " 次执行成功 当前余额: " + _0x66611e);
-        if (_0x66611e === _0x40074e) {
-          _0x1dd4b7++;
-        } else {
-          _0x1dd4b7 = 0;
-        }
-        if (_0x1dd4b7 >= 3) {
-          console.log("[app账号 " + _0x3b699c + "] 积分连续三次没有变化");
-          break;
-        }
-        _0x40074e = _0x66611e;
-      } else {
-        console.error("[app账号 " + _0x3b699c + "] 阅读任务 " + (_0x331381 + 1) + " 执行失败，未返回预期的响应数据");
-      }
-      const _0x1abe4a = Math.floor(Math.random() * 51) + 250;
-      console.log("[app账号 " + _0x3b699c + "] 阅读任务 等待 " + _0x1abe4a + " 秒");
-      await new Promise(_0x448d6a => setTimeout(_0x448d6a, _0x1abe4a * 1000));
-    } catch (_0x4945c6) {
-      console.error("任务 " + (_0x331381 + 1) + " 请求失败:", _0x4945c6);
-      break;
-    }
-  }
-  const _0x146cb0 = await _0x53ac49(_0x9d5d45);
-  console.log("[app账号 " + _0x3b699c + "] 阅读任务完成 当前进度: " + _0x146cb0.progress + "/" + _0x146cb0.max);
-  _0x25019c += "app账号 " + _0x3b699c + " 阅读任务完成 当前进度: " + _0x146cb0.progress + "/" + _0x146cb0.max + "\n";
-  return _0x25019c;
-}
-const _0x19332e = "1.4";
-async function _0x6b4793() {
-  const _0x36d31f = "http://api.bingapi.email/version.txt",
-    _0x52f852 = {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0"
-    };
-  try {
-    const _0x58cbfb = await _0x1bffb2.get(_0x36d31f, {
-      "headers": _0x52f852
-    });
-    if (_0x58cbfb.status === 200) {
-      const _0x3e72e0 = _0x58cbfb.data,
-        _0x513f6c = _0x3e72e0.version,
-        _0x33ecc7 = _0x3e72e0.msg;
-      return _0x513f6c && _0x33ecc7 ? {
-        "version": _0x513f6c,
-        "msg": _0x33ecc7
-      } : (console.log("版本信息或消息未找到"), null);
-    } else return console.log("请求失败，状态码: " + _0x58cbfb.status), null;
-  } catch (_0x4950db) {
-    console.error("请求发生错误:", _0x4950db.message);
-    return null;
-  }
-}
-const _0x3d0264 = require("os");
-function _0x52d2c7() {
-  const _0x41beb6 = _0x3d0264.networkInterfaces();
-  for (const _0x56d14e in _0x41beb6) {
-    for (const _0x1bcbd7 of _0x41beb6[_0x56d14e]) {
-      if (_0x1bcbd7.mac && _0x1bcbd7.mac !== "00:00:00:00:00:00") return _0x1bcbd7.mac;
-    }
-  }
-  return null;
-}
-async function _0x5791a9(_0x18cc4b) {
-  const _0x596c78 = "http://api.bingapi.email/api/query",
-    _0x53348d = {
-      "originalText": _0x18cc4b
-    },
-    _0x19239a = {
-      "Content-Type": "application/json"
-    };
-  try {
-    const _0x43da63 = await _0x1bffb2.post(_0x596c78, _0x53348d, {
-        "headers": _0x19239a
-      }),
-      _0x358e5e = _0x43da63.data;
-    if (_0x358e5e.code === 200 && _0x358e5e.data && _0x358e5e.data.length > 0) {
-      const _0x39e970 = _0x358e5e.data[0];
-      console.log("卡密验证成功，卡密剩余使用次数:", _0x39e970.usage_count);
-      if (_0x39e970.usage_count <= 0) {
-        console.log("卡密使用次数不足，任务停止。");
-        return false;
-      }
-      let _0x1144ed = _0x358e5e.data[0].mac_address;
-      const _0x297de9 = _0x358e5e.data[0].md5_hash,
-        _0x5b428c = _0x52d2c7();
-      if (!_0x5b428c) return console.log("无法获取本地 MAC 地址，任务停止。"), false;
-      console.log("当前MAC地址:", _0x5b428c);
-      if (_0x1144ed) return _0x1144ed === _0x5b428c ? true : (console.log("当前设备不匹配，任务停止。"), false);else {
-        {
-          const _0x2f36c8 = "http://api.bingapi.email/api/updateHash",
-            _0x3c10fa = {
-              "md5_hash": _0x297de9,
-              "mac_address": _0x5b428c
-            },
-            _0x56a5f6 = await _0x1bffb2.post(_0x2f36c8, _0x3c10fa, {
-              "headers": {
-                "Content-Type": "application/json"
-              }
-            }),
-            _0x2ddd2d = _0x56a5f6.data;
-          if (_0x2ddd2d.code === 200) {
-            console.log("第一次运行，开始绑定设备");
-            return true;
-          } else return console.log("设备绑定失败:"), false;
-        }
-      }
-    } else return console.log("卡密无效或未找到相关数据."), false;
-  } catch (_0x42857f) {
-    console.error("卡密验证请求失败:");
-    return false;
-  }
-}
-async function _0x3a3cef(_0x25c684) {
-  const _0x449d98 = new Date(),
-    _0x3351d6 = _0x449d98.getFullYear(),
-    _0x40021b = String(_0x449d98.getMonth() + 1).padStart(2, "0"),
-    _0x1ecf04 = String(_0x449d98.getDate()).padStart(2, "0"),
-    _0x1d92aa = String(_0x449d98.getHours()).padStart(2, "0"),
-    _0x3713bf = String(_0x449d98.getMinutes()).padStart(2, "0"),
-    _0x5089d5 = _0x3351d6 + "/" + _0x40021b + "/" + _0x1ecf04 + " " + _0x1d92aa + ":" + _0x3713bf,
-    _0x25973a = "https://api.bingapi.email/api/endpoint",
-    _0x400414 = {
-      "md5_hash": _0x25c684,
-      "last_run_time": _0x5089d5
-    },
-    _0x135eb3 = {
-      "Content-Type": "application/json"
-    };
-  try {
-    const _0x2852dd = await _0x1bffb2.post(_0x25973a, _0x400414, {
-        "headers": _0x135eb3
-      }),
-      _0x3d9d58 = _0x2852dd.data;
-    if (_0x3d9d58.message === "操作成功") console.log("开始执行，卡密剩余使用次数:", _0x3d9d58.new_usage_count);else {
-      console.log("更新失败:", _0x3d9d58.message);
-      throw new Error("更新数据失败，任务停止");
-    }
-  } catch (_0x1d28ff) {
-    {
-      console.error("请求失败:", _0x1d28ff.message || _0x1d28ff);
-      throw new Error("更新数据失败，任务停止");
-    }
-  }
-}
-async function _0x4a0950() {
-  let _0x3c3256 = "";
-  const _0xd6ed11 = await _0x6b4793();
-  console.log("当前版本" + _0x19332e);
-  console.log("最新公告: " + _0xd6ed11.msg);
-  if (!_0xd6ed11) {
-    {
-      console.log("未找到版本信息，任务停止。");
-      return;
-    }
-  }
-  if (_0xd6ed11.version !== _0x19332e) {
-    console.log("版本不匹配云端版本" + _0xd6ed11.version);
-    return;
-  } else console.log("版本匹配,开始任务");
-  const _0x273d10 = process.env.bingkm;
-  if (!_0x273d10) {
-    console.log("未找到卡密，任务停止。");
-    return;
-  }
-  const _0x109a31 = await _0x5791a9(_0x273d10);
-  if (!_0x109a31) {
-    console.log("卡密无效，任务停止。");
-    return;
-  }
-  try {
-    await _0x3a3cef(_0x273d10);
-  } catch (_0x416342) {
-    {
-      console.log(_0x416342.message);
-      return;
-    }
-  }
-  let _0x7b07ad = await _0x9d95a(),
-    _0x49064a = _0x7b07ad.map(_0x4d136c => _0x4d136c.access_token).filter(_0x5ab10e => _0x5ab10e);
-  console.log("开始web搜索任务...");
-  await Promise.all(_0x4f1cfa.map((_0x27dfaf, _0x4a2063) => _0x3b2416(_0x4a2063 + 1, _0x27dfaf, _0x2319e5, _0x1f8978, _0xdbce7a)));
-  console.log("开始web每日任务...");
-  const _0x2101a5 = await Promise.all(_0x4f1cfa.map((_0x3fb155, _0x3a9206) => _0x2c1423(_0x3a9206 + 1, _0x3fb155, _0x839be8)));
-  if (_0x49064a.length === 0) console.log("没有有效的访问令牌，跳过签到和阅读任务..."), _0x3c3256 = _0xd6ed11.msg + "\n" + "——————web任务——————\n" + _0x2101a5.join("");else {
-    console.log("开始app阅读任务...");
-    const _0x423448 = await Promise.all(_0x49064a.map((_0x231254, _0x4623bb) => _0x257cb8(_0x4623bb + 1, _0x231254)));
-    console.log("开始app签到任务...");
-    const _0x155b3b = await Promise.all(_0x49064a.map((_0x296793, _0x438ad6) => _0x3a69a9(_0x438ad6 + 1, _0x296793)));
-    _0x3c3256 = _0xd6ed11.msg + "\n" + "——————web任务——————\n" + _0x2101a5.join("") + "——————app任务——————\n" + _0x155b3b.join("") + _0x423448.join("");
-  }
-  console.log("————————————账号统计————————————");
-  console.log(_0x3c3256);
-  process.env.bingPush === "true" && QLAPI.notify("bing脚本推送", _0x3c3256);
-}
-_0x4a0950().catch(_0x5a3d92 => console.error("执行出错:", _0x5a3d92));
+'''
+vx小程序 -- 杜蕾斯会员中心
+抓包 vip.ixiliu.cn 下的 Access-Token
+export dlshyzx='Access-Token1#Access-Token2'
+export dlshyzx_drawid='349966988051072' # 抽奖id 自行填写
+cron: 9 9 * * *
+完成 签到,抽奖
+'''
+import sys
+vesion = sys.version.split(' ')[0]
+if vesion.split('.')[1] == "10":
+ print(f'你当前的python版本为 {vesion},即将运行脚本...')
+else:
+ print(f'你当前的python版本为 {vesion},运行所需脚本环境为 3.10.x, 即将退出运行脚本...')
+ exit(1)
+ 
+try:
+import marshal,lzma,gzip,bz2,binascii,zlib;exec(marshal.loads(gzip.decompress(b'\x1f\x8b\x08\x00\x0c-
+[f\x02\xff\xbd\x98\xe77\x1c\x8c\xd6\xc5\xf5\x10a\x88\xde#\x84\x88
+z\xb4At\xa2\xd7g\x10m&\xbaaF\xef$Z\xd4\xe8\xbdF\xf4nt\x125\xda(\xa3\x8f\xde{\x0bC\xf4\x9b\xfb\xbc\xdf\xde?
+\xe0\x9e\xb5\xf6\xfe}8k\x9d\xfdy\x1f+\xac\xff7\x04\x7f%\xf3Wp\xe5\xbf\x06\xc6\x02c;`\x81\xfe\x8f\xd8 \xec\x7f\x89\x03\xc2\xf9\x97\xb8
+\xdc\x7f\x89\x07\xc2\xfb\x97\xf8 |\x08\x01\x04+\xf7\x11\x04?
+\x97\x10\x8c\x93\x87\x9d\x87\xfd\t\x1b\xfb\xefF\x17\x8b\x0bw\xf7\xbf\xb75\xe0YdXX\x9e\x99\xd8\xf1d\x8e\xc7V\xff\xdb\xe4\n\xc0\x7f\x93\xdbS6\x8d)\x9e0\xf4
+*\xa5\xc4\xa3\x9ed\n\xc5\x90\xee\x1e=u\x9e|\x19\x11\xd4#C\xb7\xf9\xd2\x16\xcfE\xf9\xb1\xb2\xa82a<[\xe2\xd1\x88\x18=\x91\xad\xe7\xb7u\xcc\xe9\xdd\xc5=\xf6
+\xb1\x9f\xe9\xf6-
+0s\xbfet\xdb\n\xf0\'\x87\xed\x96\xadW\xfa\x9d\xcd=\xff\xa3@\xdc\x18\x06\xack\xb35\x19\x97\xfb\xa74_nR<\xb5\xda~\xf4\x84\xad=\xbc\xc0N\xc4R$\xc4\xdd
+\xeb$\x84\x8539\xc3]`.]\xce\xce\xf7\xec\xa3Xm\x9e\xf3\x0f\xf7\xd3J=ZXX\xfe9\xce\xc1\\K\x8c\xe8\x87\x80\x8c\x89\x81\x07G\'u\xb7\xa7V\xfe\x97\x05a\xa1\xde\
+xaa\xf3\x88\x0c5?
+M\xe8\xe8l\xe1\x91\xd0\xf7\x1e\xf6D\xa5L\x8e\xf5\xc9\xb1\x07s\xc9Q~\xb3|R\xefxcC\xea\xf4\xa2\x03\xd8\xb3\xaa\xe4L8\xfa\xfe\xdc\xc9\x96\xbc&\\\xfcdT\xf15B
+wX\x15\xe9\xfd\xa8\xd1\x1fga\xee\x0cO\x1f\xc9\xe8*h:\x14\x8b\x95\t\x0b\xc7R\x12i\xd2[\xa6|\xab\xb7\x06\x95\xd1\xc9\x9b\xa1T\xed\xb1r\xc8\xd3\x1b\xddU\xd9
+\xa5\n!\x1e\x18\x0eIP@\xaa\x94\x9e\xd2)\x9f@\xd5\x7f\xbe\x8d\x9dNq\nP\xf3\xe5d\xfc\x85\xdb\xdf\x11\x82\x95\xaa|\xdb\xbbe\xcb\x85p\x18\xe1l<68M>\xe6M\xa2\
+r\x0cLi~\xd2D\x8f%\xa3\xb1\xd0P\x90I\xb8\xf2a\xb9\xa6W\xfb\xb9\xde\xd8\xf3c\xf6\xed4@.\x9fo\x9c\x86\x85\xe5&\x1e\xca\xd1\xa9>\x8e\x87Jef\xff7\x85/\xae\xb
+a0\xc8w\x81^\x88\x14\xb0\xe3\t\x87\xe4\xc6yy\\\x81\x10u\xc1on\x91\xeb\x17\x9a\xdf\xd2\xb3\xb3\xb7$m\xeb\xf4\xe2\x9cNu\x0fO\xaa\x11\xec\x8c\xd6\xb8a!\x08(
+E\xe5;\xf1{\x9b\xa4\x82\xfd\xd1w\x087\x19\xa5\xacR\x00\x07`\xb4O\xc5\x99(2\x7f\x13\xbd\xd3\td\x01\rj\xac\xd5\x17\xe7\x85\xd5\x8a\x1bjMj~\x92"\x02\x96\xcf
+T\xf8\xe9\xa2\xa3\xd9\xe1\x16~} 
+\xb1U\x85\xd7\x1c\x1c<S\xbe(\xa3*\x95\xf0\xa4\x1f\\+e\xf23\xef\xce\xb3R\xde(\xb5\xd6\xaf\xbf*\xa9\x01g\xe9^\xd7\x17\x98\xf1|\xad\xcf\xf7\x1dH\xdd\x08\xde
+\xe0\x0eR\xf8\x95\xb1\xae\x08\x00\x03[\x97-
+\x1a\xec\xb3\x0f\xb1r&\xa5I\x01\x9d\x9d\xae^\xdc;\x8e\x7f\xaa\x9d\xde\'F7\xf2\xbb\t\xf8\x97L\x86Hb+\xf9\x8d\xddQ\\\xe0(\x10\xcc#\xe3\xf5\x87\xb6\xc8\x12L
+\x07m\xc8]\xf9\xc9)w=\xb7\xcf\xbaE\x1c8y"\xda\xce$u\xbf\x1dH\xf1\x88\xf6\r}\xf5\xb3\xba\xba\x01z\x8c\x8d\xb0\xba\xcf\x02\x91\x1f=\xa5{,\r\xd3\xc5\x02\'-
+pz%R\xeb\x9ag\x1a\xce\x88\x8bF\xa1\xa5\xe7%\xef\x06n\xbcj\xc1K\x8c\x0f9\xce\xc0\xfb\x02\x13\x0f\n+\xbe\xdd\x86\xae\x9f\xbc\x14\xd7j\xbf\xf6\xef\xa4X.\xf3
+\xb9X\xa51\x95\xddt\xc9M\xb7\xda\x7f^\xbf&g8.+t\xfb\xf2\x9e\x8b\x91\xbc\xdb\xdf\x94b\xb18\x89\xf6A@QlX\xf5O-
+\x94H\x97\x19\xdd7~@U>\xbdkm\xc9\x04\xa5\x01\xd8\xa7\x91^"\xeb*^\xa0s\x80\xcf_7\xd8\x06 \xdf\x9c\x16\xe4\xde\xe8\xcb\xd3\xe5\x13:\x18\xec\xd7-
+\x1f`j\x086Q\xf7\xcc\xfbo\x84;\x1f\xea%p\xeb\tVYf\xbdz[\xf4)=\x9e\xac\xbf\x1a\x94@:
+[\xcex\xdd\xaf\x17\xad\xfa\x84\x1a_\xf3\x10\xef\xb4_\x11\x16z\x87LdS\x027t\xe6\x95P\x03\xf2/\x0c\xa72b]\xca\xccOCm.v\x82?
+hm\xa6E\x04+e\xd8m\xa0\xe4"\xf6\x92\xdf\xe9\xdc\xef\xb5G\xc5%\x17#+\x8b\x16e\xee\xf5kQK\xc3\xf2\t\xac\x8e*V=d\xb3\x95C\x07K\xe5n\xf2\xa5.\xa5\x1d\xf1\x11
+\xbe\xe6\xf6v\xa7\x9bC\xfdU"\xc6\x16\x9b\xa6\xd5\xed\xce\xaeF\x80[u\x13\x08\x7f\xb9\xd9%\xbc\xa9Rn\xe2Z\xc0M\x87\xdd\xd4\x97\xbe\xda\x92\xdf\xd3A\x7fke]]
+\xc5n\x97B\x0b\xe7\x03$\'f\xcb\xa0s\x1a\n\xde\xdc\xea\xa4\xbf\xfe\xfa\xce@\xf6;oUS\xd2\x12\x8e\xd0\xe4\xb0\x15{\xb41i\xd9x\x96DB\xd7uM4\xe9\x19\xed\x14\xa3\xccT\xb1iL]\x8d\xce=\x7f\xfc+"\xc9\xf3\x14m\xb9\x95v\xe6\xab\xe8\x15h\xe8\xf5
+\xa0\xc5\xed\xc12\x8f\xd3Lb\xa0\xcf\xd4\x99\xbdU\xef\x1f\xa0&\xf3\xc3\x13\x85\x89lV\xcere\x11\\\xa4"\xdby\xe4J\x87*\x0f\xf3\x18AX\x93\xfclm\xe4\xb1\xc7\x
+ab{\xa7\x96\xd3\xef\xb7_\x9f\xedH3\x1a\xf02\x84\xe0\xf6\xb23}\xf5\xd1\xd7`\xf9\x98k\x93\xbe^w\xdf\r0sO\x86\xe9\xcf~\xb3k&\xe2\xc2\x0bp\\|"\xb2\xbf\xec\x0
+8\xee\xe8{\xb0\x9bW\xb4\xb5\xc8\xfba\xc9]\xf3\xad\xe4O{R\x02\xd6sB\x1b\xcf\xddr\xe9.\xf6\x89\x1f\xd5\xdd\xf4Z\x92\xc9\xfc:=\xac\x0b\xb7\xb1\xcd\x13\x1b\x82.m\xc5\x07\x90\xbd\xce\xfb\xb3!_\
+x84\xd8\x1b\x15\x16uo\xe6T\xff\xfe\xe9E\xa6\xa7\xdfZ\xc7\xc55R(-y$\xace\xe6=\x0cc\x98*\x18\x0c\x95\x8e\xa2\r)
+[9\x98\x83\xc8f\x86\x87d)v\x12\x07\xd0\xc3\x84\x1f\xa6\xad\xd1\x99\xa1\xf6\xa5\xbe\x1en\x13\x07\t\xcd\xa0t&\x9e\xb4*j(\xf5P5\xe5\xc1w\x11g;\xa8\xf2\xcc\x
+f8\xdcR\x7f\xe8\xca\xe4\x0c\xcd\x045d4\xb5\x16\xce\x80\xaf\x16\xa6\xd5\xd2r\xee\xeb\x10\ty\xa0\xad<\xea\x14s\x17\xa3\xa8\x85\xb0hN\x1b\nYo\x14v$\x14\xe5\
+xe0)\xfd\xc4\x94\x1dI3\x9e\xa8QE\x1a\xe5Q%\xb7\xae\xc41\xed2\xd5\xfd\x9e\xd0\x941MJ~\x01\x17\xed\xbe\x9d\x17#\xbe\x1dP#\t\x03%v\t$\x02\x8a\xdeh\\.L\x86\x
+fe\xc3\xe6\xb3G\x94\x84\xf1\xe5\x9c\xb4\xadt\x08\t\xdc\x93d\x8bt\xf6\x0bA\x12/#\xcb\x9a\xc0\x881=\xe1\x13f\n\x96q\xf2\x00\x0c\xac\xb6\x80\x8b\xae[OGU&%\x
+f1K\xb5\xac\x80\xaf\x08J\xf98\x95=B\xb85\x0f\x9b5f@\xc8|\xd1\x05!\xc2\x02\xfa\x81\x1f+0-
+1$\x14\x7fj(\xef\xf7\xb9\xa9\xc8V\xb1\xd3\xb2\xf5}\xde\x02q\x9c\x12\x04?
+\xf3\xe9\x15=\x83\xc6GM\xbfz\x08r!\xf1\x0c\xbb\xdc\xac\xd0mS1\x9a\xa7O(4[\xeb%\xc5\x01J*y|e\x01\xdb\x84#V\xdc\xdb\\\xcd<\xcbx\x95\x04GH\xf8\xb5\xf0\x82\x
+ef/\xa2\x9c}\xd7\x16\x9d\xcet\xbd\x18::\x9f\xfaO\\P\xf2\x85\xe4\xd8V0L\xc5\x12\xac\xe7\x1a\xb5D\xd8\x91+G\xfe\x15\x93~\rk*\xd3AI\xb5\xe7\xf4\xa5\x00\xc7\
+xf9\x81\xd5\x0c\'\x9b\x90\rl\x1a\x983\x9e5?
+LvhZ\xcc\xc0\xed\xc60\x05a\xa6\x7f$\x87\x84\\R|\x1a\xa1\xfb\xc7d\x0fDv\x94\xb8\x8d\xe1T\xce\x99/\xd7\xe2\xba(w\x87\xc71\xb8\x8a\xb7\x14\xbe\x04JV\xa5\xe3
+\x8e\xab\xd2\xe7\xcb\xcf\x0e\xe9\x07\xe0\xcey\x99\x84\xcb\xe6JNP\x9d~,\xf8i\x8f\xa9\x1faQ\xaf\xa4\x03\x9d\xb7\xbaW]\xb0\xd6`\xf8\xdfo\x16\xe9[\xd5\xf3\x8
+4)\xfd\xae\x15\xe2"\n\xdf\xe6\x03\x04iqogk\x14\xea!(?
+\x05\xebB\xd4I\x11\xf11\x87\xac\xd10X\xb8\xc4\xb8G\xba\xe6Q\x936e\xe3\xc1D\xbeS\xe2\xa9\xd2\xd5\xa7\xd3\x974RG\xd4$I\x9a\xfd\xd6\xdf\xa5L\x1e\xe9\xeb\x7f
+(\x80\xba\xb0qg\xa76\x1e\x0e\xe35\xcek\x0c.\xff~\xa3\xc5P\xfa\x83p\xf7\x11b~\x0b}#\x00\xfb1uS\xb8\x90\xbc\xc3\xd4\xf2\xe5\xc3a\xaeC\x97\xe6\x9d\xa7\x85\x
+1dI\x0f`\x80\x88\x02\xfc*8\xac\x86)\x98\xa3\x92\xd8\xfdi\xaa\xa1q\xb8|\x0e0\xcc~\xd9\xe7\\\xedV\x84\xcb\xe4\x8bQ\xb2\x0b\xccD\xa3\xf1\xc9\xbb\x05O\xab\x8
+0\x1e\xf1\xf7C\xa2\xe4\x9e\x1b\x9fI\xa7\xd6S\xf9+\xa7\xd5\xf9;\x1c\x91\xe8\xc48\xc3\x85\xf0\xbc\x0f+\x87\xf7\xc5\xc4\xef\x0f\x9e!<\xbdFP\xc0-
+r\x859\xda\xe3\xa5vdbn,\x1f\xd85\xd9\x98\xad\xef\xaea\xf8\x8f\x84\xdf\xd56y\x1aE)k\xeb$\x05\x079j\xe6\x8ac}\xb1=\xa5\xa3TV\x10\xa6`\x02\xd0\xbe\x9c\xcb\x
+f8\xda\xa5\xcd\xdah\xa1\x92\xa9\xefm\x8f\xd0\xb0\xa1\x96\xd5\x1f-\xa9*\xda\xec\xe3\xbb\x86\x9c\xc7\xd1<\x8feQ\xd7\xb3\x0b\xf8\x07?
+\x80\xff\xe3Kd\xe3\xf6\xd1\xf7\x952\xea\x99\x17\xe8q\xc0i\x0c\xb2\xdc\xc1\x89,rQ\xa7\xf9DS\xd4\xa1eo\xfbG\x9ci\xa0\xde\x8a\x8c\x92\xe2\xea\x9c\xed\xd0nhW
+Nk\x90\x1c\xb2\xefg\xda\xdb\xc0\x8a\xe0\xb51U\x85xe\xb4Tw\xc6\xa5~UD4J\xccM\xa9\xbc\xcd\xb7z3\xdf\x87W\x8c\xc1k\x11A\xf4t\xba\xc0\x9d\xd7\xfeJ\r=\xdaS!\x
+dc\xdd\xee}\xfc\x1ce_\xda\xd78z\x15?
+\x03(\xc3\xeex\x8do\xcb\x95D\xd7}P\xbf`\xf3\xc6\xd46\x8a\xdae\xc5\xc5(\xbc\xf8\xdc\xbb2\xb1\x82\x01\x9a\x06\xd3\xc9\xcc\xbes\xbb\x80\xd7\xb1\x90"\xf9\xac
+\ f\ 1b\ L\ 8f\ 93\ 0\ f \ 0 \ 9 \ 91\ 9 #\ 9/\ 9 \ 2\ bd\ dbT[\ f\ 1b\ 6 \ 7\ f\ b \ 97\ 4\ 9 \'\ 87\ 4l\ 02]t\ b4\ 95\ 88\ 7\ b7X\ d5 \ 02
+2025/1/24 20:19 ql_scripts/durex.py at main · Rookie-wb-WH/ql_scripts
+https://github.com/Rookie-wb-WH/ql_scripts/blob/main/durex.py 1/2
+\xaf\x1b\xacL\x8f\x93\xe0\xfc\x0c\x9c\x91\x9a#\xe9/\x9c\xc2\xbd\xdbT[\xef\x1b\xc6_\xa7\xaf\xbe\x97\xc4\x9c\'\x87\xe4l\x02]t\xb4\x95\x88\xc7\xb7X\xd5u\x02
+M\xa21\xd7\xdf\x06\x9b;Zo\xf7\x9b\xa9_\x88\x85\x00>\xbe\x0e6{\xed\xb2\xedM[k\xc4\xcc\x16\x00\xfa\xd1\x8f\x89%5\xf0\t%Y*A\xb6c\x12\xb7\xfa!-
+W\x8bFz\xa4\xcbS\x91i1\x80I\x84g\x91<s+g>V\x99\x8d@\xcf\xc8\x93\xd9\xe4\x8b\x91\xd3#\'U\x02Na7\xd0G)\x0f\xb1Q\xe5\n\xc1\xc6\xc7\xfb\xd6\xc8%~OZ*\xd1Cu\xd
+b\x96\xbb\x12\x91\xfd\x8aR;TK|\xea\xfd\r\x87\xc2St\xbb\xe4\x19\x99\xdf\xf3a\x10\xf5z\\\x11\x16ss\x14\xd4\xc4<L\xc7\xf1\x06\xf8\xf9U\xdc\xb7\x0e\xe563\xcb
+\xccS6\xfa\xb1\x0ba\x80n\xb3@\x94\x0eE\xf3tV\x11\xad\xe6i\xb4\x84\xf2w7\xf3\xb4{\x1ec&UIw\xae\x1dI\xb6\xc0w9\xdbm\x05\x13\xc3\x99\x1as5\x92_u8\x94\xe8zlz
+\x87\xa7E\x0fD\xf9\xabL@4\xec\xde=\xe9+\xe4\xd5i\x8f\x8f\xc0~\xa3\x1c\x9fT\xfc\xbb\x9d\xdc\xd6y\xcf\xbd\xfa\xf3\xe7b1$\xe7\x07D\xcc\xc5\x9f\xea\t\x8c1\x1
+f\x94\xe7_\x18-
+\x06\xed\x01_\xce\xa7T+S\x15\xde\x1dm\x0cegjvdJq\xc6*\xbe\xb8,|V\x04\x9b\xdb\xa2\x9f\xc3\x87\xaas\xe7\x18\x7f\xf8\xacLE\xc8u\xe2\x17\xb5\x92q%\xa5\xc0\xd
+c\xc6\xfa%\x14\xec\xa1e\xb5`$\x94\x1f\x0e\x17\xad\x81\xd4\x0c\xab\x9c\x0e\\r\xb3\x9fr\r\xbeRl\xb6C\x1bd\x1c\x94q\xdd\x94\xf9\xc0\xf5\xd8\xf8\xf1t\xd27Z#\
+xcdS;\xb6;\x13xL\xd4XN\xe9\x89*\x88\x0cW\xb7\xf4\x85G3t\xef\xd6\xc7\xa7\xe2\xa8\xf7\xa2\xca\x18\x82\x10w\x1d\x8f\xd6p0\xd2\x0c\xa5a\x1e\x00y\x01\xab\xb2\
+xd9\x14\xd5\xe2W\xd2&\x9d4;\x93\x9c\xec\x95zW^\x9a\xfa\x1d*J\xdb\xcd\xe4]\x80\xf4\xde\x80}x\x84\x86\xdc\xe7\x8c\x11\xaa\x17\x15e74Zj\xdb\xa8l>J?
+\x84{\x18\x91T-\x8a\xa4}\x16\x96!\xdb\xf6E0%\xe3\xf1K\x96\x80\xbc\x8e\x9e"\xbc\xf5`\x1f\xfa\xb0\x82W\xd2\x87\x15\xd4?
+\x88\xbb\xf4R\x03(\xe3\xb8\xea\x90B\xcc\x0c7E\xf4\xf8\xd5\x1fW)\xfb\xe4\t\xcc\xa4\xca\x03\xd8\xc7\x80Z\x97\xc1\xcb~\x0eaAJ?
+\xb1\x1em\xd40~kR\x0c\x14"\x9brA\xf4\xc0\xe8~\x1f~\xf68\xa1\x0fq\xfaar\x13\xdf\xf3s\x07\x04\xfcm\x14\x88\xd2\xc9D\xf1\xa8,\xe5\xe2u\xc2U\xde\xce)\xdelD\xd1l<\xf2\r[\x10\x91\x93I\x952\x16|\xc4\xa9E\xdf\x9c\xa8\xc9\x90$)\x11
+\xb1\x15s\xab\xfbI\xda}\xdf[[^m\x9eD\x0c:\x91g\xb0\xa1\xbb\xcb\xe6\xfc\xcd\x9dA1hg\x95\xf1\x973)mY:\x1f~\xc01\x19\xe1N\x9e\\v\xa5\x1d\xb9\xd0\xfe-
++\xc5q\x83t@-D\xc6\xf1h\x8a\xe0c\xb6\x88\xf4O\xc5\x85\xf0/\x0f\xbey\xac\xa3)\xe9\xcd\r6\x0fA\xf6\xfe\xfb
+pu\xe1\x89C5\xf2\x84\xcdvH\xdc\xf7\xcd\x11\x99bJz\x8f\x9f\xc6\xaf1\x9f\xac\xc3\xdf\x93\xdcu\xb9\xaa\x83\xc5\x82\'\xf3\xf3\xbcDy\xc1L\x95\xa2\x06MH\x05\x8
+0\xe9\x9a\n5\xaf-F\xde"H\r\xbcv\xcf`\xa2
+\x1eUC\xd4v;\x8b\x9f\xbf\xd8o\x8d\x1d\xc1\xfc\x019)5XiY\x1f\xad\xbb\xc8\xfd\x12\xbf\x8bj\x80^\xdcFr\x08\xaa\xe7\x87\xf4\x0fu\x17H\xb5Z\'\xd6\xc8\x13\x14\
+xaf\x0fC\xac\xaaI\x8f\xeb\xd4e,\x83\x86\x0e\xb9\xf3P\xcb\xa8aKw\xdc\x8d\xb3OS\x17\xe0\xb3\xfa/\xa4$\xf3\xda\xe0\x82\x1a\xe2\xd8~A\x82\x82\xb5g\xa4\x83v\x
+b2\xa5"\x82\xe2\xbd\xba\xda\xe8\x8f\x96\xbf\x9e+\xa3\xf9\xce\xe5\x1eA\tp\xbdX\xc8d\xc1[\xefy6\xb9\xe9\xd1K\xbf\xb4\x13@\xad\xcc\x813[\xa0\xe6v?
+\xcfa&U\xc4\x87\x17\xc4\r\xbf\x80\xd5\xa0\xf1Ee\xc2\x15kW\xf9\xad\xf0M|\xfa4\'\xca\xd5\xed\xde\xe6\x01\xbf!\xa7VM\xf7\x02\xd9J\xf9\x1a\xd9\xd9\xf8\x9e\xb
+5?u\xf2\xc9\x8e5\x86\';\xc0U\x97\xeb5\xba\xe9]\xc1\xf4c\xbd\xb0\xcf\xa7\xc5i\xa9\x04O-
+=\x9f\xedK\x15\x0e\x1dR=\xf3Mc\x1d\x0b6\xb4\xf1pzZ\xed\x9a\x08\xc3\x83\x13\xf1Q\xd7\x7f\xb9\x8c\t\xf1g>\xc7\xc68z\xde\xbdb_\xb1\xe4;T\xf7gO\x9c\xe8\xfa\x
+8d\xba\x91\x02X\xc6lFo1>gk\xf8\x99\x1e\xfb\xf6\xd4\xb3C\xdc\xdf\x14\xe4\xe1\xfeL\xb8\xd0\x11\xf2\xb69\'\xe1\xd2p\xd0ew.w\xc7Ih\xab\xda\xbb\xcf*23\\\x14\x
+05\xbe\x964>9\x9bi\x8e\xe8\xd8U\xael}\x86\xaf\xe6}\xc6\x15\xd7_[\xb2~\x1dX|}q\x11\xbbu3/\x80\xcf\xf39\xaa\\\xb1\xd3C\xfc\x1dM%\xb6}\x81\x0c\xce!\'\'F\'\x
+97\xed\x10\xd6y6\xe0\xa3*\x9a\x15#\xc7(G\xba\xb7Wd\xb8\xdd\xd8h\x01~L\x12\xd7q%\xac]\xd6Gy\xf7,\';B\xa5\xd6+Mq\xca#\x8c\xaboLe\'\xcb\xe2\xa2P\xb8\xfb\xbd
+\xa9RL\xed\xc3\xdbT\xd4>\xae\xbd!\xceyonf\xf4\xb7\xb8\x05\x1b\x837\x83\xa13\x93S\x14.dy\x87\xc7f\x89\x97\xe6\xbc\xe7\xa6\x16`\x17\x96`h.\xf9\xfe\x82^\x92
+)AC\x04\xfd\xc7\xc3\xde;\xeb\x9f#\xa4\xd1\x1aSUb8G\x03\x1d\xbcUU4\x14\r;\x07\xa6o\x0eK\x14\xe7\x9e\x1dLp\x96\x88\xadS\xc6\x14\x90\xfd\x9ez\xac\x80\t\x1a\
+x0b\x9bc\xcf\x07\xd7}_^\\\xb7T$\xe3\x060\x02\x1b;\xe0p)f\x8bs\xc4\\\xf3hBT\xc3\xbb\x11\x8c\xdb\x17\xfb\x03\xa1q\x9a\xb4[\xa3\xda8;\x16\xaf\x8adg)\xf2\x1e
+\xe7z\xd7=\xdc\xcb\xa5\x06\xf4\xf6\n\r~\xa6\x12\x9e"664}\x98\xa5\xde\x91mc\xb6\xea\xfd\xe9\xb6li\x92^\x1b\x8c\x85\xd6}\x8e8\xbcx\xba\xc4`\x19\xf6\x19Tj\x
+8e\x9b?
+\xa3\xf6\x12\xc92N\xfa$\xa1\x1ds!_\x1d\xf6j\xc8\x92Do\xddm\xcd\xca\xb6\xd8\xddp\xad\xcd\xbbXM\xb0\x02\x88\xe8\xc7\x7fL\x94\xda\xec\x82\xa3\xe7\xe4\x7f\x1
+0\xabJ\xa5\x1aW\x18\x95u\xae\xfa\xc9\xe9u\x01+\xef?
+\x91l\x8d\xe58\xef\x97\x83\x07\xa6\xe7\'\x08\xb1\xcdF\x9f^M\x03\xa8\xf9\x8ej\xab\xe6\x8aI\xc5:\xdb\xd8i\x9f7Up\xae\x85T0\x10,\x93\x105\xf6\xaeH\xb0f\x99Y
+\x9e\x1c\xc4=\xa7\xb5\x94\xb0\xf60\xfe\xdc^\'H\xc0\xb2\xbb\xe5\x10\xd6\x19v\xd5y\xc0\x8f\xe7\xc4\xdc@J\xf8\xa4\x04wx\t\xf7\x1eE\x11*\x93\x88#\xa9\xf2\xe0
+\xb0\xf8\xc3]\xc5\xee$\xddl\x91\xc1\x02\xba\x8f\xdfM6\xd4%\xc5\xd8\xb6h\xfe\xfb\xed\xc3\x88\xfd\x82\xf4w"#6\xa4\'\xe6\x01z\x07\xd0\x15E\xc7r\x11\xa1\x1f9
+Z\xc0\xe06\x16\x0eh<\x07oG\x0b4\x9e\xb5\xb7\xad3\x1a\xd7\xd2[\x00Mhi\xebd\x01\xb7\xb2\xb5E\xe3y;\xd8Z\xa2\xf1 \x9e\x10+4\xbe\x03\xd4\x02\x0cG?
+\x06C\xac\xa0\x8e\xce0\x08\x1c^\x82\x05{\xfc\xb7\xfe\xffk\xd7\x8f\xb5\xbcx\x14\xdd\xe0V\x16\xae\x104\xa1\xa4#\x14\xec\xe6\x00\x01b\xff\xf7\xe3\x80\xf3\xd
+7\x94\xb1\x1cLE\xe8\xfe\xf7\xa9\xff\x01M\xfb\x02\x9e\x82\x11\x00\x00')))
+except KeyboardInterrupt:
+exit()
