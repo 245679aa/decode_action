@@ -2607,7 +2607,7 @@ function changeMapLv(_0x5c7327) {
 }
 function getSettingValue(_0x502e40, _0x5065c0) {
     const _0x19c5e1 = _0x3ad607
-      ， _0x2eb2c3 = {
+      , _0x2eb2c3 = {
         'rNPWE': function(_0x9520db, _0x3c9663) {
             return _0x9520db === _0x3c9663;
         },
